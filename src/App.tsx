@@ -1,5 +1,5 @@
-import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import React from 'react';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'aos/dist/aos.css'; 
@@ -24,14 +24,8 @@ const App: React.FC = () => {
           </header>
           <main>
             <Routes>
-              <Route path='/' element={
-                <MainSection />
-              } />
-              <Route path='/login' element={
-                <Login onLoginSuccess={() => {
-                  // handle login success logic
-                }} />
-              } />
+              <Route path='/' element={<MainSection />} />
+              <Route path='/login' element={<Login  />} />
               <Route path='/dashboard' element={<PrivateRoute />}>
                 <Route index element={<Dashboard />} />
                 {/* Other child routes of dashboard go here */}

@@ -1,16 +1,16 @@
+import { useNavigate } from 'react-router-dom';
 import React, { useState } from 'react';
-
-import api from '../api';
 import { AxiosError } from 'axios';
 
-interface LoginProps {
-  onLoginSuccess: () => void;
-}
+import { useAuth } from '../auth/useAuth';
+import api from '../api';
 
-const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
+const Login: React.FC = () => {
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
+  const { setCurrentUser } = useAuth();
+  const navigate = useNavigate();
 
   const handleLogin = async () => {
     if (username === '' || password === '') {
@@ -25,7 +25,8 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
         const token = response.data.accessToken;
         localStorage.setItem('authToken', token);
         api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        onLoginSuccess();
+        setCurrentUser(response.data.user);
+        navigate('/dashboard');
       } else {
         setError(response.data.message);
       }
