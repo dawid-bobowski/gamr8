@@ -17,7 +17,7 @@ const UserList: React.FC = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await api.get('/users');
+        const response = await api.get('/api/users');
         setUsers(response.data);
         setLoading(false);
       } catch (error) {
