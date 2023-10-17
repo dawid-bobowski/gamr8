@@ -1,10 +1,19 @@
 import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Header: React.FC = () => {
+  const navigate = useNavigate();
+
+  const handleLoginClick = () => {
+    navigate('/login');
+  };
+
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container-fluid">
-        <a className="navbar-brand" href="#">GAMR8</a>
+        <Link className='navbar-brand' to='/'>
+          GAMR8
+        </Link>
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon"></span>
         </button>
@@ -21,7 +30,9 @@ const Header: React.FC = () => {
             </li>
           </ul>
           <div className="d-flex">
-            <button className="btn btn-success me-2">Login</button>
+            <button className="btn btn-success me-2" onClick={handleLoginClick}>
+              Login
+            </button>
             <button className="btn btn-primary">Register</button>
           </div>
         </div>
