@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button, Form } from 'react-bootstrap';
 import '../App.css';
 
-const MainSection: React.FC = () => {
+const Home: React.FC = () => {
   const [search, setSearch] = useState<string>('');
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -33,4 +33,4 @@ const MainSection: React.FC = () => {
   );
 };
 
-export default MainSection;
+export default Home;

@@ -1,24 +1,20 @@
 import { Outlet, useNavigate } from 'react-router-dom';
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 
 import { useAuth } from '../auth/useAuth';
 
 
-const PrivateRoute: React.FC = () => {
+const PublicRoute: React.FC = () => {
   const { currentUser } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!currentUser) {
-      navigate('/login');
+    if (currentUser) {
+      navigate('/dashboard');
     }
   }, [currentUser, navigate]);
 
-  if (!currentUser) {
-    return null;
-  }
-
   return <Outlet />;
-}
+};
 
-export default PrivateRoute;
+export default PublicRoute;
