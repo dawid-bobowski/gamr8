@@ -45,22 +45,32 @@ const Login: FC = () => {
             <div className='card-body'>
               <h2 className='text-center mb-4'>Login</h2>
               <div className='mb-3'>
-                <label className='form-label'>Username</label>
-                <input
-                  type='text'
-                  className='form-control'
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                />
+                <label className='form-label'>
+                  Username
+                  <input
+                    type='text'
+                    className='form-control'
+                    id='username'
+                    name='username'
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    autoComplete='username'
+                  />
+                </label>
               </div>
               <div className='mb-3'>
-                <label className='form-label'>Password</label>
-                <input
-                  type='password'
-                  className='form-control'
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
+                <label className='form-label'>
+                  Password
+                  <input
+                    type='password'
+                    className='form-control'
+                    id='password'
+                    name='password'
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    autoComplete='current-password'
+                  />
+                </label>
               </div>
               <div className='d-grid'>
                 <button
