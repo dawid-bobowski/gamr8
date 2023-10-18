@@ -21,8 +21,8 @@ const Login: FC = () => {
       });
       if (response.data.success) {
         const token = response.data.accessToken;
-        localStorage.setItem('token', token);
-        login(token, response.data.user);
+        const user = response.data.user;
+        login(token, user);
       } else {
         setError(response.data.message);
       }

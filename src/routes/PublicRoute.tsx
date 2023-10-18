@@ -1,9 +1,13 @@
-import { Outlet, useNavigate } from 'react-router-dom';
-import { FC, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useEffect, ReactNode } from 'react';
 
 import { useAuth } from '../auth/useAuth';
 
-const PublicRoute: FC = () => {
+interface PublicRouteProps {
+  children: ReactNode;
+}
+
+const PublicRoute: React.FC<PublicRouteProps> = ({ children }) => {
   const { currentUser } = useAuth();
   const navigate = useNavigate();
 
@@ -13,7 +17,7 @@ const PublicRoute: FC = () => {
     }
   }, [currentUser, navigate]);
 
-  return <Outlet />;
+  return <>{children}</>;
 };
 
 export default PublicRoute;

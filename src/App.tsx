@@ -27,36 +27,19 @@ const App: FC = () => {
           </header>
           <main>
             <Routes>
-              <Route
-                path='/'
-                element={<Home />}
-              />
-              <Route
-                path='/login'
-                element={<PublicRoute />}
-              >
-                <Route
-                  index
-                  element={<Login />}
-                />
-              </Route>
-              <Route
-                path='/register'
-                element={<PublicRoute />}
-              >
-                <Route
-                  index
-                  element={<div>Register Page</div>}
-                />
-              </Route>
-              <Route
-                path='/dashboard'
-                element={<PrivateRoute />}
-              >
-                <Route
-                  index
-                  element={<Dashboard />}
-                />
+              <Route path='/' element={<Home />} />
+              <Route path='/login' element={
+                <PublicRoute>
+                  <Login />
+                </PublicRoute>
+              } />
+              <Route path='/register' element={
+                <PublicRoute>
+                  <div>Register Page</div>
+                </PublicRoute>
+              } />
+              <Route path='/dashboard' element={<PrivateRoute />}>
+                <Route index element={<Dashboard />} />
                 {/* Other child routes of dashboard go here */}
               </Route>
             </Routes>

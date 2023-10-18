@@ -1,11 +1,19 @@
-import { FC } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import React from 'react';
 
-const Header: FC = () => {
+import { useAuth } from '../auth/useAuth';
+
+const Header: React.FC = () => {
+  const { currentUser, logout } = useAuth();
   const navigate = useNavigate();
 
   const handleLoginClick = () => {
     navigate('/login');
+  };
+
+  const handleLogoutClick = () => {
+    logout();
+    navigate('/');
   };
 
   return (
@@ -58,14 +66,19 @@ const Header: FC = () => {
               </a>
             </li>
           </ul>
-          <div className='d-flex'>
-            <button
-              className='btn btn-success me-2'
-              onClick={handleLoginClick}
-            >
-              Login
-            </button>
-            <button className='btn btn-primary'>Register</button>
+          <div className="d-flex">
+            {!currentUser ? (
+              <>
+                <button className="btn btn-success me-2" onClick={handleLoginClick}>
+                  Login
+                </button>
+                <button className="btn btn-primary">Register</button>
+              </>
+            ) : (
+              <button className="btn btn-success me-2" onClick={handleLogoutClick}>
+                Logout
+              </button>
+            )}
           </div>
         </div>
       </div>

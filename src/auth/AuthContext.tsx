@@ -1,4 +1,4 @@
-import { FC, createContext, ReactNode, useState } from 'react';
+import { createContext, ReactNode, useState } from 'react';
 
 interface User {
   id: number;
@@ -18,16 +18,21 @@ interface AuthProviderProps {
   children: ReactNode;
 }
 
-export const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState<User | null>(null);
+export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
+  const storedUser = localStorage.getItem('user');
+  const initialUser = storedUser ? JSON.parse(storedUser) : null;
+
+  const [currentUser, setCurrentUser] = useState<User | null>(initialUser);
 
   const login = (token: string, user: User) => {
     localStorage.setItem('token', token);
+    localStorage.setItem('user', JSON.stringify(user));
     setCurrentUser(user);
   };
 
   const logout = () => {
     localStorage.removeItem('token');
+    localStorage.removeItem('user');
     setCurrentUser(null);
   };
 
