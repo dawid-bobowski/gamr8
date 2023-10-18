@@ -1,10 +1,9 @@
 import { Outlet, useNavigate } from 'react-router-dom';
-import React, { useEffect } from 'react';
+import { FC, useEffect } from 'react';
 
 import { useAuth } from '../auth/useAuth';
 
-
-const PrivateRoute: React.FC = () => {
+const PrivateRoute: FC = () => {
   const { currentUser } = useAuth();
   const navigate = useNavigate();
 
@@ -19,6 +18,6 @@ const PrivateRoute: React.FC = () => {
   }
 
   return <Outlet />;
-}
+};
 
 export default PrivateRoute;

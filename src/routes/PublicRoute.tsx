@@ -1,10 +1,9 @@
 import { Outlet, useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import { FC, useEffect } from 'react';
 
 import { useAuth } from '../auth/useAuth';
 
-
-const PublicRoute: React.FC = () => {
+const PublicRoute: FC = () => {
   const { currentUser } = useAuth();
   const navigate = useNavigate();
 

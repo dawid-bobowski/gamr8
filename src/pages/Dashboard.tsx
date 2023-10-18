@@ -1,12 +1,12 @@
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { FC } from 'react';
 
-const Dashboard: React.FC = () => {
+const Dashboard: FC = () => {
   const navigate = useNavigate();
-  
+
   // Dummy check for authentication. Replace with your actual logic.
   const isAuthenticated = true; // Change this value to test redirects
-  
+
   if (!isAuthenticated) {
     navigate('/login');
     return null;
@@ -18,6 +18,6 @@ const Dashboard: React.FC = () => {
       Welcome to the Dashboard!
     </div>
   );
-}
+};
 
 export default Dashboard;

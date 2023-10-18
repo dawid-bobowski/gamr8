@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import { FC, useState } from 'react';
 import { AxiosError } from 'axios';
 
 import { useAuth } from '../auth/useAuth';
 import api from '../api';
 
-const Login: React.FC = () => {
+const Login: FC = () => {
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
@@ -51,7 +51,7 @@ const Login: React.FC = () => {
                   className='form-control'
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
-                  />
+                />
               </div>
               <div className='mb-3'>
                 <label className='form-label'>Password</label>
@@ -63,7 +63,10 @@ const Login: React.FC = () => {
                 />
               </div>
               <div className='d-grid'>
-                <button className='btn btn-primary' onClick={handleLogin}>
+                <button
+                  className='btn btn-primary'
+                  onClick={handleLogin}
+                >
                   Login
                 </button>
                 {error && <div className='alert alert-danger'>{error}</div>}

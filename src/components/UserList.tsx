@@ -24,7 +24,7 @@ const UserList: React.FC = () => {
         console.error('Error fetching data:', error);
       }
     }
-    
+
     fetchData();
   }, []);
 
@@ -44,7 +44,7 @@ const UserList: React.FC = () => {
         ))}
       </ul>
     </>
-  )
-}
+  );
+};
 
 export default UserList;

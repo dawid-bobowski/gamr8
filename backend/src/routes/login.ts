@@ -1,10 +1,10 @@
-import express, { Request, Response } from 'express';
+import { Router, Request, Response } from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
-const router = express.Router();
+const router = Router();
 const JWT_SECRET = process.env.JWT_SECRET || 'very-secret-key';
 
 router.post('/register', async (req: Request, res: Response) => {
@@ -23,7 +23,7 @@ router.post('/register', async (req: Request, res: Response) => {
         username,
         email,
         password: hashedPassword,
-      }
+      },
     });
     res.status(201).json({ success: true, user: { userID: newUser.id, username, email } });
   } catch (error) {
@@ -43,7 +43,7 @@ router.post('/login', async (req: Request, res: Response) => {
       return res.status(401).json({ message: 'Invalid password' });
     }
     const token = jwt.sign({ id: user.id }, JWT_SECRET, {
-      expiresIn: 86400
+      expiresIn: 86400,
     });
     return res.status(200).json({ success: true, accessToken: token, user: { id: user.id, username: username } });
   } catch (error) {
@@ -52,8 +52,8 @@ router.post('/login', async (req: Request, res: Response) => {
 });
 
 router.post('/logout', (req: Request, res: Response) => {
-  // Typically, logging out on the server side means invalidating the token. 
-  // Since JWT is stateless and if you're not using a token blacklist, 
+  // Typically, logging out on the server side means invalidating the token.
+  // Since JWT is stateless and if you're not using a token blacklist,
   // logout is often handled on the client side by simply removing the token from client storage.
   res.json({ success: true, message: 'Logged out successfully' });
 });
