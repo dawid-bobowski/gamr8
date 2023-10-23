@@ -13,6 +13,7 @@ const Login: FC = () => {
   const handleLogin = async () => {
     if (username === '' || password === '') {
       setError('Please provide valid credentials.');
+      return;
     }
     try {
       const response = await api.post('/login', {
@@ -73,10 +74,7 @@ const Login: FC = () => {
                 </label>
               </div>
               <div className='d-grid'>
-                <button
-                  className='btn btn-primary'
-                  onClick={handleLogin}
-                >
+                <button className='btn btn-primary' onClick={handleLogin} disabled={Boolean(!username || !password || error)}>
                   Login
                 </button>
                 {error && <div className='alert alert-danger'>{error}</div>}
