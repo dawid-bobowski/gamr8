@@ -19,53 +19,34 @@ const Header: React.FC = () => {
   return (
     <nav className='navbar navbar-expand-lg navbar-dark bg-dark'>
       <div className='container-fluid'>
-        <Link
-          className='navbar-brand'
-          to='/'
-        >
+        <Link className='navbar-brand' to='/'>
           GAMR8
         </Link>
-        <button
-          className='navbar-toggler'
-          type='button'
-          data-bs-toggle='collapse'
-          data-bs-target='#navbarNav'
-          aria-controls='navbarNav'
-          aria-expanded='false'
-          aria-label='Toggle navigation'
-        >
+        <button className='navbar-toggler' type='button' data-bs-toggle='collapse' data-bs-target='#navbarNav' aria-controls='navbarNav' aria-expanded='false' aria-label='Toggle navigation'>
           <span className='navbar-toggler-icon'></span>
         </button>
-        <div
-          className='collapse navbar-collapse justify-content-end'
-          id='navbarNav'
-        >
+        <div className='collapse navbar-collapse justify-content-end' id='navbarNav'>
           <ul className='navbar-nav mr-auto'>
             <li className='nav-item'>
-              <a
-                className='nav-link'
-                href='#'
-              >
-                Home
-              </a>
+              <a className='nav-link' href='#'>Home</a>
             </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#">Profile</a>
+            <li className='nav-item'>
+              <a className='nav-link' href='#'>About</a>
             </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#">Reviews</a>
+            <li className='nav-item'>
+              <a className='nav-link' href='#'>Features</a>
             </li>
           </ul>
-          <div className="d-flex">
+          <div className='buttons d-flex justify-content-center p-2 mt-4 p-lg-0 mt-lg-0'>
             {!currentUser ? (
               <>
-                <button className="btn btn-success me-2" onClick={handleLoginClick}>
+                <button className='btn btn-success me-2' onClick={handleLoginClick}>
                   Login
                 </button>
-                <button className="btn btn-primary">Register</button>
+                <button className='btn btn-primary'>Register</button>
               </>
             ) : (
-              <button className="btn btn-success me-2" onClick={handleLogoutClick}>
+              <button className='btn btn-success me-2' onClick={handleLogoutClick}>
                 Logout
               </button>
             )}
