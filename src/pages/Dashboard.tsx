@@ -1,21 +1,27 @@
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FC } from 'react';
 
-const Dashboard: FC = () => {
+import Recommendations from './Recommendations';
+import SearchBar from './SearchBar';
+
+import { useAuth } from '../auth/useAuth';
+
+const Dashboard: React.FC = () => {
   const navigate = useNavigate();
+  const { currentUser } = useAuth();
 
-  // Dummy check for authentication. Replace with your actual logic.
-  const isAuthenticated = true; // Change this value to test redirects
-
-  if (!isAuthenticated) {
-    navigate('/login');
-    return null;
-  }
+  // Redirect to login if the user is not authenticated
+  useEffect(() => {
+    if (!currentUser) {
+      navigate('/login');
+    }
+  }, [currentUser, navigate]);
 
   return (
     <div>
-      {/* Dashboard content here */}
-      Welcome to the Dashboard!
+      <SearchBar />
+      <Recommendations />
+      {/* Other components like GameReviewSection... */}
     </div>
   );
 };

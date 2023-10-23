@@ -49,21 +49,11 @@ const Header: React.FC = () => {
                 Home
               </a>
             </li>
-            <li className='nav-item'>
-              <a
-                className='nav-link'
-                href='#'
-              >
-                About
-              </a>
+            <li className="nav-item">
+              <a className="nav-link" href="#">Profile</a>
             </li>
-            <li className='nav-item'>
-              <a
-                className='nav-link'
-                href='#'
-              >
-                Features
-              </a>
+            <li className="nav-item">
+              <a className="nav-link" href="#">Reviews</a>
             </li>
           </ul>
           <div className="d-flex">
