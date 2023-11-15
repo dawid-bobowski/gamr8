@@ -1,11 +1,6 @@
 import React from 'react';
 import { Card } from 'react-bootstrap';
-
-interface Game {
-  id: number;
-  title: string;
-  imageUrl: string;
-}
+import { Game } from './Recommendations';
 
 interface GameCardProps {
   game: Game;
@@ -17,7 +12,7 @@ const GameCard: React.FC<GameCardProps> = ({ game }) => {
       <Card.Img variant='top' src={game.imageUrl} />
       <Card.Body>
         <Card.Title>{game.title}</Card.Title>
-        <Card.Text>Some quick game info or description</Card.Text>
+        <Card.Text>{game.description}</Card.Text>
       </Card.Body>
     </Card>
   );

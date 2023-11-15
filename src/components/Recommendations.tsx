@@ -1,17 +1,31 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import GameCard from './GameCard';
+import api from '../api';
+
+export interface Game {
+  id: number;
+  title: string;
+  description: string;
+  year: number;
+  imageUrl: string;
+}
 
 const Recommendations: React.FC = () => {
-  // Mock data for demonstration
-  const games = [
-    { id: 1, title: 'Assassin\'s Creed Mirage', imageUrl: '' },
-    { id: 2, title: 'Baldur\'s Gate 3', imageUrl: '' },
-    { id: 3, title: 'World of Warcraft', imageUrl: '' },
-    { id: 4, title: 'The Sims 4', imageUrl: '' },
-    { id: 5, title: 'Final Fantasy XVI', imageUrl: '' },
-    { id: 6, title: 'Starfield', imageUrl: '' },
-  ];
+  const [games, setGames] = useState<Game[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await api.get('/api/games');
+        setGames(response.data.games);
+      } catch (error) {
+        console.error('Error fetching games data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <Container id='recommendations'>
@@ -19,7 +33,7 @@ const Recommendations: React.FC = () => {
       <Row className='d-flex justify-content-center g-3'>
         {games.map((game) => (
           <Col key={game.id} md={4}>
-            <GameCard game={game} />
+            <GameCard game={{ ...game, imageUrl: '' }} />
           </Col>
         ))}
       </Row>
