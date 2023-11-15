@@ -31,6 +31,11 @@ const Header: React.FC = () => {
     navigate('/');
   };
 
+  const handleRegisterClick = () => {
+    toggleMobileMenu();
+    navigate('/register');
+  };
+
   const toggleMobileMenu = () => {
     const bsWindow = window as unknown as BootstrapWindow;
     const bsCollapse = new bsWindow.bootstrap.Collapse(navbarMenuRef.current!, {
@@ -84,7 +89,9 @@ const Header: React.FC = () => {
                 <button className='btn btn-success me-2' onClick={handleLoginClick}>
                   Login
                 </button>
-                <button className='btn btn-primary'>Register</button>
+                <button className='btn btn-primary' onClick={handleRegisterClick}>
+                  Register
+                </button>
               </>
             ) : (
               <button className='btn btn-success me-2' onClick={handleLogoutClick}>
