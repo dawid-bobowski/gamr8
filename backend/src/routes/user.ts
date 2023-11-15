@@ -14,14 +14,4 @@ router.get('/api/users', async (req, res) => {
   }
 });
 
-router.post('/api/users', async (req, res) => {
-  try {
-    const newUser = await prisma.user.create({ data: req.body });
-    res.json(newUser);
-  } catch (error) {
-    console.error('Error creating user:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-});
-
 export default router;
