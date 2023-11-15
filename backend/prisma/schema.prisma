@@ -8,8 +8,29 @@ generator client {
 }
 
 model User {
-  id       Int    @id @default(autoincrement())
-  username String @unique
-  email    String @unique
-  password String
+  id          Int      @id @default(autoincrement())
+  username    String   @unique
+  email       String   @unique
+  password    String
+  description String?
+  reviews     Review[]
+}
+
+model Game {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String
+  year        Int
+  Review      Review[]
+}
+
+model Review {
+  id          Int    @id @default(autoincrement())
+  author      User   @relation(fields: [author_id], references: [id])
+  author_id   Int
+  game        Game   @relation(fields: [game_id], references: [id])
+  game_id     Int
+  title       String
+  description String
+  rating      Int
 }
