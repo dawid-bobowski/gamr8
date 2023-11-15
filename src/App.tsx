@@ -10,6 +10,7 @@ import PublicRoute from './routes/PublicRoute';
 
 import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
+import Register from './pages/Register';
 import Home from './pages/Home';
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -35,7 +36,7 @@ const App: FC = () => {
               } />
               <Route path='/register' element={
                 <PublicRoute>
-                  <div>Register Page</div>
+                  <Register />
                 </PublicRoute>
               } />
               <Route path='/dashboard' element={<PrivateRoute />}>
