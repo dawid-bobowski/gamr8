@@ -1,9 +1,11 @@
 import { Link, useNavigate } from 'react-router-dom';
 import React, { useEffect, useRef } from 'react';
+import { Image } from 'react-bootstrap';
 
 import { useAuth } from '../auth/useAuth';
-import { Image } from 'react-bootstrap';
+
 import DefaultProfilePic from '../assets/default-user.png';
+import Logo from '/gamr8-white.png';
 
 type BootstrapWindow = {
   bootstrap: {
@@ -72,7 +74,7 @@ const Header: React.FC = () => {
     <nav className='navbar navbar-expand-lg navbar-dark bg-dark'>
       <div className='container-fluid'>
         <Link className='navbar-brand' to='/'>
-          GAMR8
+          <Image src={Logo} height={32} />
         </Link>
         <button ref={toggleButtonRef} className='navbar-toggler' type='button' data-bs-toggle='collapse' data-bs-target='#navbarNav' aria-controls='navbarNav' aria-expanded='false' aria-label='Toggle navigation'>
           <span className='navbar-toggler-icon'></span>
