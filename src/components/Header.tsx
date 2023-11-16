@@ -38,6 +38,10 @@ const Header: React.FC = () => {
     navigate('/register');
   };
 
+  const handleProfilePicClick = () => {
+    navigate('/profile');
+  }
+
   const toggleMobileMenu = () => {
     const bsWindow = window as unknown as BootstrapWindow;
     const bsCollapse = new bsWindow.bootstrap.Collapse(navbarMenuRef.current!, {
@@ -85,7 +89,7 @@ const Header: React.FC = () => {
               <a className='nav-link' href='#'>Features</a>
             </li>
           </ul>
-          <button type='button' className='me-2 p-0 rounded-circle'>
+          <button type='button' className='me-2 p-0 rounded-circle' onClick={handleProfilePicClick}>
             <Image roundedCircle src={DefaultProfilePic} width={38} height={38} />
           </button>
           <div className='buttons d-flex justify-content-center p-2 mt-4 p-lg-0 mt-lg-0'>

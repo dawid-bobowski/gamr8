@@ -12,6 +12,7 @@ import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Home from './pages/Home';
+import Profile from './pages/Profile';
 import Header from './components/Header';
 import Footer from './components/Footer';
 
@@ -41,7 +42,9 @@ const App: FC = () => {
               } />
               <Route path='/dashboard' element={<PrivateRoute />}>
                 <Route index element={<Dashboard />} />
-                {/* Other child routes of dashboard go here */}
+              </Route>
+              <Route path='/profile' element={<PrivateRoute />}>
+                <Route index element={<Profile />} />
               </Route>
             </Routes>
           </main>
