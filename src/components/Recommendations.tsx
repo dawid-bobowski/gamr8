@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import GameCard from './GameCard';
 import api from '../api';
@@ -11,7 +11,7 @@ export interface Game {
   imageUrl: string;
 }
 
-const Recommendations: React.FC = () => {
+const Recommendations: FC = () => {
   const [games, setGames] = useState<Game[]>([]);
 
   useEffect(() => {

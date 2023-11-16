@@ -4,7 +4,8 @@ import { Image } from 'react-bootstrap';
 
 import { useAuth } from '../auth/useAuth';
 
-import DefaultProfilePic from '../assets/default-user.png';
+// import DefaultProfilePic from '../assets/default-user.png';
+import UserPic from '../assets/users/user-7.png';
 import Logo from '/gamr8-white.png';
 
 type BootstrapWindow = {
@@ -92,7 +93,7 @@ const Header: React.FC = () => {
             </li>
           </ul>
           <button type='button' className='me-2 p-0 rounded-circle' onClick={handleProfilePicClick}>
-            <Image roundedCircle src={DefaultProfilePic} width={38} height={38} />
+            <Image roundedCircle src={UserPic} width={38} height={38} />
           </button>
           <div className='buttons d-flex justify-content-center p-2 mt-4 p-lg-0 mt-lg-0'>
             {!currentUser ? (
