@@ -2,6 +2,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import React, { useEffect, useRef } from 'react';
 
 import { useAuth } from '../auth/useAuth';
+import { Image } from 'react-bootstrap';
+import DefaultProfilePic from '../assets/default-user.png';
 
 type BootstrapWindow = {
   bootstrap: {
@@ -83,6 +85,9 @@ const Header: React.FC = () => {
               <a className='nav-link' href='#'>Features</a>
             </li>
           </ul>
+          <button type='button' className='me-2 p-0 rounded-circle'>
+            <Image roundedCircle src={DefaultProfilePic} width={38} height={38} />
+          </button>
           <div className='buttons d-flex justify-content-center p-2 mt-4 p-lg-0 mt-lg-0'>
             {!currentUser ? (
               <>
