@@ -5,7 +5,7 @@ import { Image } from 'react-bootstrap';
 import { useAuth } from '../auth/useAuth';
 
 // import DefaultProfilePic from '../assets/default-user.png';
-import UserPic from '../assets/users/user-7.png';
+import UserPic from '../assets/users/user-8.png';
 import Logo from '/gamr8-white.png';
 
 type BootstrapWindow = {
@@ -72,48 +72,50 @@ const Header: React.FC = () => {
   }, []);
 
   return (
-    <nav className='navbar navbar-expand-lg navbar-dark bg-dark'>
-      <div className='container-fluid'>
-        <Link className='navbar-brand' to='/'>
-          <Image src={Logo} height={32} />
-        </Link>
-        <button ref={toggleButtonRef} className='navbar-toggler' type='button' data-bs-toggle='collapse' data-bs-target='#navbarNav' aria-controls='navbarNav' aria-expanded='false' aria-label='Toggle navigation'>
-          <span className='navbar-toggler-icon'></span>
-        </button>
-        <div ref={navbarMenuRef} className='collapse navbar-collapse justify-content-end' id='navbarNav'>
-          <ul className='navbar-nav mr-auto'>
-            <li className='nav-item'>
-              <a className='nav-link' href='#'>Home</a>
-            </li>
-            <li className='nav-item'>
-              <a className='nav-link' href='#'>About</a>
-            </li>
-            <li className='nav-item'>
-              <a className='nav-link' href='#'>Features</a>
-            </li>
-          </ul>
-          <button type='button' className='me-2 p-0 rounded-circle' onClick={handleProfilePicClick}>
-            <Image roundedCircle src={UserPic} width={38} height={38} />
+    <header>
+      <nav className='navbar navbar-expand-lg navbar-dark bg-dark'>
+        <div className='container-fluid'>
+          <Link className='navbar-brand' to='/'>
+            <Image src={Logo} height={32} />
+          </Link>
+          <button ref={toggleButtonRef} className='navbar-toggler' type='button' data-bs-toggle='collapse' data-bs-target='#navbarNav' aria-controls='navbarNav' aria-expanded='false' aria-label='Toggle navigation'>
+            <span className='navbar-toggler-icon'></span>
           </button>
-          <div className='buttons d-flex justify-content-center p-2 mt-4 p-lg-0 mt-lg-0'>
-            {!currentUser ? (
-              <>
-                <button className='btn btn-success me-2' onClick={handleLoginClick}>
-                  Login
+          <div ref={navbarMenuRef} className='collapse navbar-collapse justify-content-end' id='navbarNav'>
+            <ul className='navbar-nav mr-auto'>
+              <li className='nav-item'>
+                <a className='nav-link' href='#'>Home</a>
+              </li>
+              <li className='nav-item'>
+                <a className='nav-link' href='#'>About</a>
+              </li>
+              <li className='nav-item'>
+                <a className='nav-link' href='#'>Features</a>
+              </li>
+            </ul>
+            <button type='button' className='me-2 p-0 rounded-circle' onClick={handleProfilePicClick}>
+              <Image roundedCircle src={UserPic} width={38} height={38} />
+            </button>
+            <div className='buttons d-flex justify-content-center p-2 mt-4 p-lg-0 mt-lg-0'>
+              {!currentUser ? (
+                <>
+                  <button className='btn btn-success me-2' onClick={handleLoginClick}>
+                    Login
+                  </button>
+                  <button className='btn btn-primary' onClick={handleRegisterClick}>
+                    Register
+                  </button>
+                </>
+              ) : (
+                <button className='btn btn-success me-2' onClick={handleLogoutClick}>
+                  Logout
                 </button>
-                <button className='btn btn-primary' onClick={handleRegisterClick}>
-                  Register
-                </button>
-              </>
-            ) : (
-              <button className='btn btn-success me-2' onClick={handleLogoutClick}>
-                Logout
-              </button>
-            )}
+              )}
+            </div>
           </div>
         </div>
-      </div>
-    </nav>
+      </nav>
+    </header>
   );
 };
 

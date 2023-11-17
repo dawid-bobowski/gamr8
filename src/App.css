@@ -1,20 +1,21 @@
-#root {
-  max-width: 1920px;
-  margin: 0 auto;
-  text-align: center;
-}
-
 /* Reset default margins and paddings */
 body, html {
   margin: 0;
   padding: 0;
-  height: 100%;
+}
+
+#root {
+  margin: 0 auto;
+  width: 100vw;
+  background-color: #0e0e0e;
 }
 
 /* Full height for the main App container */
 .App {
   min-height: 100vh;
-  min-width: 100vw;
+  width: 100vw;
+  max-width: 1920px;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
 }

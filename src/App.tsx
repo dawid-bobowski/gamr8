@@ -12,7 +12,7 @@ import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Home from './pages/Home';
-import Profile from './pages/Profile';
+import UserProfile from './pages/UserProfile';
 import Header from './components/Header';
 import Footer from './components/Footer';
 
@@ -24,9 +24,7 @@ const App: FC = () => {
           className='App'
           style={{ backgroundColor: '#191825' }}
         >
-          <header>
-            <Header />
-          </header>
+          <Header />
           <main>
             <Routes>
               <Route path='/' element={<Home />} />
@@ -44,7 +42,7 @@ const App: FC = () => {
                 <Route index element={<Dashboard />} />
               </Route>
               <Route path='/profile' element={<PrivateRoute />}>
-                <Route index element={<Profile />} />
+                <Route index element={<UserProfile />} />
               </Route>
             </Routes>
           </main>
