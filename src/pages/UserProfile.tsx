@@ -34,8 +34,15 @@ const UserProfile: FC = () => {
           </div>
         </div>
       </div>
-      <div className='d-flex justify-content-center align-items-center p-5 gap-5 w-100' style={{ minWidth: 300, maxWidth: 600, backgroundColor: '#2f2f3d' }}>
-        
+      <div className='d-flex flex-column justify-content-center align-items-center py-4 px-5 gap-4 w-100' style={{ minWidth: 300, maxWidth: 600, backgroundColor: '#2f2f3d' }}>
+        <div className='align-self-start'>
+          <h3 className='display-10 text-white mb-0'>Recent reviews</h3>
+        </div>
+        <div className='d-flex flex-column gap-3 w-100'>
+          <div className='bg-white w-100' style={{ height: 200 }}></div>
+          <div className='bg-white w-100' style={{ height: 200 }}></div>
+          <div className='bg-white w-100' style={{ height: 200 }}></div>
+        </div>
       </div>
     </div>
   );
