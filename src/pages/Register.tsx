@@ -91,59 +91,59 @@ const Register: FC = () => {
           <div className='card'>
             <div className='card-body'>
               <h2 className='text-center mb-4'>Register</h2>
-              <div className='mb-3'>
-                <label className='form-label'>
-                  Username
-                  <input
-                    type='text'
-                    className='form-control'
-                    id='username'
-                    name='username'
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                  />
-                </label>
-              </div>
-              <div className='mb-3'>
-                <label className='form-label'>
-                  Email
-                  <input
-                    type='email'
-                    className='form-control'
-                    id='email'
-                    name='email'
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                </label>
-              </div>
-              <div className='mb-3'>
-                <label className='form-label'>
-                  Password
-                  <input
-                    type='password'
-                    className='form-control'
-                    id='password'
-                    name='password'
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
-                </label>
-              </div>
-              <div className='mb-3'>
-                <label className='form-label'>
-                  Confirm Password
-                  <input
-                    type='password'
-                    className='form-control'
-                    id='confirm-password'
-                    name='confirm-password'
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                  />
-                </label>
-              </div>
-              <div className='d-grid'>
+              <div className='d-flex flex-column align-items-center'>
+                <div className='mb-3'>
+                  <label className='form-label'>
+                    Username
+                    <input
+                      type='text'
+                      className='form-control'
+                      id='username'
+                      name='username'
+                      value={username}
+                      onChange={(e) => setUsername(e.target.value)}
+                      />
+                  </label>
+                </div>
+                <div className='mb-3'>
+                  <label className='form-label'>
+                    Email
+                    <input
+                      type='email'
+                      className='form-control'
+                      id='email'
+                      name='email'
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      />
+                  </label>
+                </div>
+                <div className='mb-3'>
+                  <label className='form-label'>
+                    Password
+                    <input
+                      type='password'
+                      className='form-control'
+                      id='password'
+                      name='password'
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      />
+                  </label>
+                </div>
+                <div className='mb-3'>
+                  <label className='form-label'>
+                    Confirm Password
+                    <input
+                      type='password'
+                      className='form-control'
+                      id='confirm-password'
+                      name='confirm-password'
+                      value={confirmPassword}
+                      onChange={(e) => setConfirmPassword(e.target.value)}
+                      />
+                  </label>
+                </div>
                 <button className='btn btn-primary' onClick={handleRegister} disabled={error !== '' || Boolean(!username || !email || !password || !confirmPassword)}>
                   Register
                 </button>
