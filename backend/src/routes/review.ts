@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { PrismaClient } from '@prisma/client';
-import { body, validationResult } from 'express-validator';
+import { body, param, validationResult } from 'express-validator';
 
 const router = Router();
 const prisma = new PrismaClient();
@@ -24,12 +24,12 @@ router.get('/api/reviews/user/:id', async (req, res) => {
   }
 });
 
-router.post('/api/reviews/add',
-  body('authorId').isNumeric(),
-  body('gameId').isNumeric(),
-  body('title').isString(),
-  body('description').isString(),
-  body('rating').isNumeric(),
+router.post('/api/reviews/create',
+  body('authorId').exists().isNumeric(),
+  body('gameId').exists().isNumeric(),
+  body('title').exists().isString(),
+  body('description').exists().isString(),
+  body('rating').exists().isNumeric(),
   async (req, res) => {
     const validationErrors = validationResult(req);
     if (!validationErrors.isEmpty()) {
@@ -65,27 +65,35 @@ router.post('/api/reviews/add',
     }
 });
 
-router.patch('/api/reviews/edit',
-  body('authorId').isNumeric(),
-  body('gameId').isNumeric(),
-  body('title').isString(),
-  body('description').isString(),
-  body('rating').isNumeric(),
+router.patch('/api/reviews/update/:id',
+  body('authorId').exists().isNumeric(),
+  body('title').exists().isString(),
+  body('description').exists().isString(),
+  body('rating').exists().isNumeric(),
+  param('id').exists().isNumeric(),
   async (req, res) => {
     const validationErrors = validationResult(req);
     if (!validationErrors.isEmpty()) {
       return res.status(400).json({ message: 'Failed request data validation' });
     }
     try {
+      const gameId = req.params?.id;
+      if (!gameId) {
+        return res.status(404).json({ message: 'No review ID was provided in the request' });
+      }
+      const intGameId = parseInt(gameId);
+      if (isNaN(intGameId)) {
+        return res.status(404).json({ message: 'Provided review ID is not a number' });
+      }
       const review = await prisma.review.findFirst({
         where: {
-          game_id: parseInt(req.body.gameId),
+          game_id: intGameId,
         },
       });
       if (!review) {
         return res.status(404).json({ message: 'Review doesn\'t exist' });
       }
-      const { authorId, gameId, title, description, rating } = req.body;
+      const { authorId, title, description, rating } = req.body;
       const newReview = await prisma.review.update({
         where: {
           id: review.id,
@@ -99,12 +107,12 @@ router.patch('/api/reviews/edit',
         },
       });
       if (newReview) {
-        res.status(201).json({ message: 'Review updated successfully', review: newReview });
+        res.status(200).json({ message: 'Review updated successfully', review: newReview });
       } else {
         return res.status(500).json({ message: 'Failed to edit the review' });
       }
     } catch (error) {
-      console.error('Error creating a new review:', error);
+      console.error('Error updating the review:', error);
       res.status(500).json({ message: 'Internal server error' });
     }
 });
