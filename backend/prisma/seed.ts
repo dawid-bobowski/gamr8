@@ -30,6 +30,7 @@ const users: PrismaUser[] = [
 
 interface PrismaGame {
   title: string;
+  slug: string;
   description: string;
   year: number;
 }
@@ -37,7 +38,9 @@ interface PrismaGame {
 const games: PrismaGame[] = [
   {
     title: 'Deathloop',
-    description: 'In "Deathloop," players find themselves on the mysterious island of Blackreef, trapped in a time \
+    slug: 'deathloop',
+    description:
+      'In "Deathloop," players find themselves on the mysterious island of Blackreef, trapped in a time \
       loop. The game is a first-person shooter that combines elements of stealth and strategy, where the player\'s \
       goal is to eliminate eight key targets before the day resets. Its unique gameplay mechanic centers around \
       learning from each loop to devise the perfect strategy.',
@@ -45,7 +48,9 @@ const games: PrismaGame[] = [
   },
   {
     title: 'Elden Ring',
-    description: '"Elden Ring" is an open-world action RPG developed by FromSoftware, known for its challenging \
+    slug: 'elden-ring',
+    description:
+      '"Elden Ring" is an open-world action RPG developed by FromSoftware, known for its challenging \
     gameplay and rich lore. Set in the Lands Between, players are tasked to find the Elden Ring fragments to become \
     the Elden Lord. The game features vast landscapes, complex dungeons, and a blend of magic and combat with a high \
     degree of customization.',
@@ -53,7 +58,9 @@ const games: PrismaGame[] = [
   },
   {
     title: 'World of Warcraft',
-    description: '"World of Warcraft" is a massively multiplayer online role-playing game (MMORPG) set in the \
+    slug: 'world-of-warcraft',
+    description:
+      '"World of Warcraft" is a massively multiplayer online role-playing game (MMORPG) set in the \
     high-fantasy universe of Azeroth. Players create characters from various races and classes, exploring a vast \
     world, completing quests, and interacting with other players. WoW is known for its expansive lore, regular \
     updates, and large-scale raids and dungeons.',
@@ -61,7 +68,9 @@ const games: PrismaGame[] = [
   },
   {
     title: 'The Sims 4',
-    description: '"The Sims 4" is a life simulation game where players create and control virtual people, known as \
+    slug: 'the-sims-4',
+    description:
+      '"The Sims 4" is a life simulation game where players create and control virtual people, known as \
     Sims, in their daily activities and relationships. The game emphasizes customization, from the Sims\' appearance \
     and personalities to the design of their homes. It\'s known for its open-ended gameplay, numerous expansion \
     packs, and the ability for players to share creations.',
@@ -69,14 +78,18 @@ const games: PrismaGame[] = [
   },
   {
     title: 'Final Fantasy XV',
-    description: '"Final Fantasy XV" is an action RPG set in the fictional world of Eos. The story follows Prince \
+    slug: 'final-fantasy-xv',
+    description:
+      '"Final Fantasy XV" is an action RPG set in the fictional world of Eos. The story follows Prince \
     Noctis and his friends on a quest to reclaim his throne from an invading empire. The game combines real-time \
     combat with strategic elements, a deep narrative, and a vast world to explore.',
     year: 2016,
   },
   {
     title: 'God of War: Ragnarok',
-    description: '"God of War: Ragnarok" continues the story of Kratos and his son Atreus in a world steeped in Norse \
+    slug: 'god-of-war-ragnarok',
+    description:
+      '"God of War: Ragnarok" continues the story of Kratos and his son Atreus in a world steeped in Norse \
     mythology. This action-adventure game combines brutal combat with puzzle-solving and exploration elements. The \
     narrative focuses on themes of family and fate, as Kratos and Atreus face new gods and monsters in the backdrop \
     of the prophesied end of the world.',
@@ -103,7 +116,7 @@ async function main() {
 }
 
 main()
-  .catch(e => {
+  .catch((e) => {
     console.error(e);
     process.exit(1);
   })

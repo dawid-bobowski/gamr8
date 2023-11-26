@@ -21,7 +21,8 @@ model Game {
   title       String
   description String   @db.Text
   year        Int
-  reviews      Review[]
+  reviews     Review[]
+  slug        String   @unique
 }
 
 model Review {

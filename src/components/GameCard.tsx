@@ -3,7 +3,7 @@ import { Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 import { Game } from './Recommendations';
-import { titleToSlug } from '../utils/common';
+import { titleToSlug } from '../../common';
 
 interface GameCardProps {
   game: Game;
@@ -13,12 +13,13 @@ const GameCard: FC<GameCardProps> = ({ game }) => {
   const slug: string = titleToSlug(game.title);
   return (
     <Card>
-      <Card.Img variant='top' src={game.imageUrl} />
+      <Card.Img
+        variant='top'
+        src={game.imageUrl}
+      />
       <Card.Body>
         <Card.Title>
-          <Link to={`/game/${slug}`}>
-            {game.title}
-          </Link>
+          <Link to={`/game/${slug}`}>{game.title}</Link>
         </Card.Title>
         <Card.Text>{game.description}</Card.Text>
       </Card.Body>
