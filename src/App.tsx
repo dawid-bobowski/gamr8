@@ -13,6 +13,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Home from './pages/Home';
 import UserProfile from './pages/UserProfile';
+import GameProfile from './pages/GameProfile';
 import Header from './components/Header';
 import Footer from './components/Footer';
 
@@ -44,6 +45,7 @@ const App: FC = () => {
               <Route path='/profile' element={<PrivateRoute />}>
                 <Route index element={<UserProfile />} />
               </Route>
+              <Route path='/game/:slug' element={<GameProfile />} />
             </Routes>
           </main>
           <Footer />
