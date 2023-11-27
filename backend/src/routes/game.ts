@@ -35,12 +35,13 @@ router.get('/api/games/:id', async (req, res) => {
 
 router.post('/api/games', async (req, res) => {
   try {
-    const { title, description, year } = req.body;
+    const { title, description, year, slug } = req.body;
     const newGame = await prisma.game.create({
       data: {
         title,
         description,
         year,
+        slug,
       },
     });
     res.status(201).json({ message: 'Game created successfully', newGame });
