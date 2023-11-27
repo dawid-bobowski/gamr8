@@ -1,13 +1,18 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { Image } from 'react-bootstrap';
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useState } from 'react';
+import { AxiosError } from 'axios';
 
 import { useAuth } from '../auth/useAuth';
+import api from '../api';
+import { Game } from '../common/types';
 
 const GameProfile: FC = () => {
   const navigate = useNavigate();
   const { currentUser } = useAuth();
   const { slug } = useParams();
+  const [game, setGame] = useState<Game | null>(null);
+  const [error, setError] = useState<string>('');
 
   // Redirect to login if the user is not authenticated
   useEffect(() => {
@@ -15,8 +20,36 @@ const GameProfile: FC = () => {
       navigate('/login');
     }
   }, [currentUser, navigate]);
+  
+  useEffect(() => {
+    const getGame = async () => {
+      try {
+        const response = await api.get(`/api/games/${slug}`);
+        if (!response.data.game) {
+          setError(response.data.message);
+        } else {
+          setGame(response.data.game);
+          error && setError('');
+        }
+      } catch (error) {
+        let errorMessage = `Error sending request: `;
+        if (error instanceof AxiosError && error.response) {
+          errorMessage += error.response.data.message;
+        } else {
+          errorMessage += error;
+        }
+        setError(errorMessage);
+      }
+    }
+
+    getGame();
+  }, []);
 
   if (!currentUser) return <></>;
+  if (error) return <div>
+    <p>Error while fetching data!</p>
+    <p>{error}</p>
+  </div>
 
   return (
     <div className='d-flex flex-column align-items-center mt-5'>
@@ -34,15 +67,15 @@ const GameProfile: FC = () => {
           />
         </div>
         <div className='flex-1 w-100 h-100 d-flex flex-column justify-content-center h-100'>
-          <h1 className='display-5 text-primary'>Game Title</h1>
+          <h1 className='display-5 text-primary'>{game?.title ?? '<title>'}</h1>
         </div>
         <div
           id='buttons'
           className='flex-1 w-100 align-self-center d-flex flex-column gap-1 mt-3'
           style={{ width: '15rem' }}
         >
-          <p>Game info</p>
-          <p>Game slug: {slug}</p>
+          <p>Release year: {game?.year ?? '<year>'}</p>
+          <p>{game?.description ?? '<description>'}</p>
         </div>
       </div>
       <div
