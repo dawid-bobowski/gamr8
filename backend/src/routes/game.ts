@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { PrismaClient } from '@prisma/client';
+import { Game, PrismaClient } from '@prisma/client';
 
 const router = Router();
 const prisma = new PrismaClient();
@@ -14,12 +14,12 @@ router.get('/api/games', async (req, res) => {
   }
 });
 
-router.get('/api/games/:id', async (req, res) => {
+router.get('/api/games/:slug', async (req, res) => {
   try {
-    const id = parseInt(req.params.id);
-    const game = await prisma.game.findUnique({
+    const slug: string = req.params.slug;
+    const game: Game | null = await prisma.game.findUnique({
       where: {
-        id: id,
+        slug,
       },
     });
     if (game) {
