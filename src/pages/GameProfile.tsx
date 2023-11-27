@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { Image } from 'react-bootstrap';
 import { FC, useEffect, useState } from 'react';
 import { AxiosError } from 'axios';
@@ -6,20 +6,13 @@ import { AxiosError } from 'axios';
 import { useAuth } from '../auth/useAuth';
 import api from '../api';
 import { Game } from '../common/types';
+import GameReview from '../components/GameReview';
 
 const GameProfile: FC = () => {
-  const navigate = useNavigate();
   const { currentUser } = useAuth();
   const { slug } = useParams();
   const [game, setGame] = useState<Game | null>(null);
   const [error, setError] = useState<string>('');
-
-  // Redirect to login if the user is not authenticated
-  useEffect(() => {
-    if (!currentUser) {
-      navigate('/login');
-    }
-  }, [currentUser, navigate]);
   
   useEffect(() => {
     const getGame = async () => {
@@ -45,7 +38,6 @@ const GameProfile: FC = () => {
     getGame();
   }, []);
 
-  if (!currentUser) return <></>;
   if (error) return <div>
     <p>Error while fetching data!</p>
     <p>{error}</p>
@@ -81,7 +73,9 @@ const GameProfile: FC = () => {
       <div
         className='d-flex flex-column justify-content-center align-items-center py-4 px-5 gap-4 w-100'
         style={{ minWidth: 300, maxWidth: 1000, backgroundColor: '#2f2f3d' }}
-      ></div>
+      >
+        {currentUser && <GameReview />}
+      </div>
     </div>
   );
 };
