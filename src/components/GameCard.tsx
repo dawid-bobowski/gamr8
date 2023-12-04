@@ -2,8 +2,8 @@ import { FC } from 'react';
 import { Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
-import { Game } from './Recommendations';
 import { titleToSlug } from '../../common';
+import { Game } from '../common/types';
 
 interface GameCardProps {
   game: Game;
