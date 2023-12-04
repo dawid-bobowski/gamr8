@@ -1,4 +1,4 @@
-import { useState, KeyboardEvent, Fragment } from 'react';
+import { useState, KeyboardEvent, useEffect } from 'react';
 import { AxiosError } from 'axios';
 import { FaStar } from 'react-icons/fa';
 
@@ -53,23 +53,8 @@ const GameReview = (props: GameReviewProps): JSX.Element => {
     }
   }
 
-  const ParseDescription = (): JSX.Element[] => {
-    return description.split('\n').map((line, lineIndex) => (
-      line ? (
-        <p key={lineIndex} style={{ textAlign: 'justify' }}>
-          {line.split('\t').map((tabSegment, tabIndex) => (
-            <Fragment key={tabIndex}>
-              {tabIndex > 0 ? <span style={{ width: '40px', display: 'inline-block' }}></span> : null}
-              <span>{tabSegment}</span>
-            </Fragment>
-          ))}
-        </p>
-      ) : <br key={lineIndex} />
-    ));
-  };
-
-const handleKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {
-  if (event.key === 'Tab') {
+  const handleKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {
+    if (event.key === 'Tab') {
       event.preventDefault();
       const target = event.target as HTMLTextAreaElement;
       const start = target.selectionStart;
@@ -80,10 +65,16 @@ const handleKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {
 
       // Move the caret to the right position (after the inserted tab)
       setTimeout(() => {
-          target.selectionStart = target.selectionEnd = start + 1;
+        target.selectionStart = target.selectionEnd = start + 1;
       }, 0);
+    }
   }
-}
+
+  useEffect(() => {
+    if (error !== '') {
+      setTimeout(() => setError(''), 3000);
+    }
+  }, [error]);
 
   return (
     <>
@@ -138,18 +129,14 @@ const handleKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {
           </div>
         </div>
       </div>
-      {description !== '' && <div className='d-flex flex-column align-items-center w-100'>
-        <h2 className='text-center mb-4'>Preview your review ✨</h2>
-        <h3>{title}</h3>
-        <div className='d-flex flex-column align-items-center'>
-          {ParseDescription()}
-        </div>
-        <div>Rating: {rating}/10</div>
-        <button className='btn btn-primary mt-4 w-50' onClick={handleAddReview} disabled={description === '' || title === ''}>
-          Publish
-        </button>
-        {error && <div className='alert alert-danger'>{error}</div>}
-      </div>}
+      <button
+        className='btn btn-primary w-auto px-5'
+        onClick={handleAddReview}
+        disabled={description === '' || title === ''}
+      >
+        Publish
+      </button>
+      {error && <div className='alert alert-danger'>{error}</div>}
     </>
   )
 }

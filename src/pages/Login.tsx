@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useState, useEffect } from 'react';
 import { AxiosError } from 'axios';
 
 import { useAuth } from '../auth/useAuth';
@@ -37,6 +37,12 @@ const Login: FC = () => {
       setError(errorMessage);
     }
   };
+
+  useEffect(() => {
+    if (error !== '') {
+      setTimeout(() => setError(''), 3000);
+    }
+  }, [error]);
 
   return (
     <div className='container mt-5'>
