@@ -26,7 +26,7 @@ router.get('/api/reviews/user/:id', async (req, res) => {
 
 router.post('/api/reviews/create',
   body('authorId').exists().isNumeric(),
-  body('gameId').exists().isNumeric(),
+  body('gameSlug').exists().isString(),
   body('title').exists().isString(),
   body('description').exists().isString(),
   body('rating').exists().isNumeric(),
@@ -36,26 +36,38 @@ router.post('/api/reviews/create',
       return res.status(400).json({ message: 'Failed request data validation' });
     }
     try {
+      const game = await prisma.game.findFirst({
+        where: {
+          slug: req.body.gameSlug,
+        },
+      });
+      if (!game) {
+        return res.status(404).json({ message: 'Game not found' });
+      }
       const review = await prisma.review.findFirst({
         where: {
-          game_id: parseInt(req.body.gameId),
+          game_id: game.id,
         },
       });
       if (review) {
         return res.status(409).json({ message: 'Review already exists' });
       }
-      const { authorId, gameId, title, description, rating } = req.body;
+      const { authorId, title, description, rating } = req.body;
       const newReview = await prisma.review.create({
         data: {
           author_id: authorId,
-          game_id: gameId,
+          game_id: game.id,
           title,
           description,
           rating,
         },
       });
       if (newReview) {
-        res.status(201).json({ message: 'Review added successfully', review: newReview });
+        res.status(201).json({
+          success: true,
+          message: 'Review added successfully',
+          review: newReview,
+        });
       } else {
         return res.status(500).json({ message: 'Failed to create a new review' });
       }
@@ -107,7 +119,11 @@ router.patch('/api/reviews/update/:id',
         },
       });
       if (newReview) {
-        res.status(200).json({ message: 'Review updated successfully', review: newReview });
+        res.status(200).json({
+          success: true,
+          message: 'Review updated successfully',
+          review: newReview,
+        });
       } else {
         return res.status(500).json({ message: 'Failed to edit the review' });
       }
