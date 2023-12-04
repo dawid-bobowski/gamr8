@@ -7,27 +7,6 @@ const GameReview: FC = () => {
     console.log(reviewText);
   }
 
-  const parseImage = (text: string, lineIndex: number, tabIndex: number): JSX.Element[] => {
-    const imagePattern = /image=#(.*?)#/g;
-    const content: JSX.Element[] = [];
-    const parts = text.split(imagePattern);
-
-      for (let i = 0; i < parts.length; i++) {
-        if (i % 2 === 0) {
-          // Regular text
-          content.push(<span key={`${lineIndex}-${tabIndex}-${i}`}>{parts[i]}</span>);
-        } else {
-          // Image URL
-          content.push(<img key={`${lineIndex}-${tabIndex}-${i}`} src={parts[i]} alt="" style={{ maxWidth: '100%', float: 'left' }} />);
-        }
-      }
-    if (tabIndex < text.length - 1) {
-      content.push(<span key={`${lineIndex}-tab-${tabIndex}`} style={{ width: '40px', display: 'inline-block' }}></span>);
-    }
-
-    return content;
-  }
-
   const ParseReviewText = (): JSX.Element[] => {
     return reviewText.split('\n').map((line, lineIndex) => (
       line ? (
@@ -35,7 +14,7 @@ const GameReview: FC = () => {
           {line.split('\t').map((tabSegment, tabIndex) => (
             <Fragment key={tabIndex}>
               {tabIndex > 0 ? <span style={{ width: '40px', display: 'inline-block' }}></span> : null}
-              <span>{parseImage(tabSegment, lineIndex, tabIndex)}</span>
+              <span>{tabSegment}</span>
             </Fragment>
           ))}
         </p>
