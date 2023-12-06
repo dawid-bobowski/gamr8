@@ -24,6 +24,31 @@ router.get('/api/reviews/user/:id', async (req, res) => {
   }
 });
 
+router.get('/api/review/user/:userId/game/:gameId', async (req, res) => {
+  try {
+    const userId = parseInt(req.params.userId);
+    const gameId = parseInt(req.params.gameId);
+    const review = await prisma.review.findFirst({
+      where: {
+        author_id: userId,
+        game_id: gameId,
+      },
+    });
+    if (review) {
+      return res.status(200).json({
+        success: true,
+        message: 'Review found',
+        review,
+      });
+    } else {
+      res.status(404).json({ message: 'Review not found' });
+    }
+  } catch (error) {
+    console.error('Error fetching user reviews:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
 router.post('/api/reviews/create',
   body('authorId').exists().isNumeric(),
   body('gameSlug').exists().isString(),
