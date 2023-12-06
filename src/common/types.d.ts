@@ -6,3 +6,12 @@ export interface Game {
   slug: string;
   imageUrl: string;
 }
+
+export interface Review {
+  id: number;
+  authorId: number;
+  gameId: number
+  title: string;
+  description: string;
+  rating: number;
+}
