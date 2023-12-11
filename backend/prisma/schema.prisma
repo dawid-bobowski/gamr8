@@ -27,12 +27,12 @@ model Game {
 }
 
 model Review {
-  id          Int    @id @default(autoincrement())
-  author      User   @relation(fields: [author_id], references: [id])
-  author_username   String
-  game        Game   @relation(fields: [game_id], references: [id])
-  game_id     Int
-  title       String
-  description String
-  rating      Int
+  id              Int    @id @default(autoincrement())
+  author          User   @relation(fields: [author_username], references: [username])
+  author_username String
+  game            Game   @relation(fields: [game_id], references: [id])
+  game_id         Int
+  title           String
+  description     String
+  rating          Int
 }
