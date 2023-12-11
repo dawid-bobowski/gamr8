@@ -5,34 +5,36 @@ import { body, param, validationResult } from 'express-validator';
 const router = Router();
 const prisma = new PrismaClient();
 
-router.get('/api/reviews/user/:id', async (req, res) => {
-  try {
-    const id = parseInt(req.params.id);
-    const reviews = await prisma.review.findMany({
-      where: {
-        author_id: id,
-      },
-    });
-    if (reviews) {
-      return res.status(200).json({ message: 'Reviews found', reviews });
-    } else {
-      res.status(404).json({ message: 'There are no reviews yet' });
-    }
-  } catch (error) {
-    console.error('Error fetching user reviews:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-});
+interface QueryFilters {
+  author_username: string;
+  game_id?: number;
+}
 
-router.get('/api/review/user/:userId/game/:gameId', async (req, res) => {
+router.get('/api/reviews/:username', async (req, res) => {
   try {
-    const userId = parseInt(req.params.userId);
-    const gameId = parseInt(req.params.gameId);
+    const username = req.params.username;
+    const gameId = req.query.gameId as string | undefined;
+    const queryFilter: QueryFilters = {
+      author_username: username,
+    }
+    if (!gameId) {
+      const reviews = await prisma.review.findMany({
+        where: queryFilter,
+      });
+      if (reviews) {
+        return res.status(200).json({
+          success: true,
+          message: 'Reviews found',
+          reviews,
+        });
+      }
+      return res.status(404).json({
+        message: 'There are no reviews yet',
+      });
+    }
+    queryFilter.game_id = parseInt(gameId);
     const review = await prisma.review.findFirst({
-      where: {
-        author_id: userId,
-        game_id: gameId,
-      },
+      where: queryFilter,
     });
     if (review) {
       return res.status(200).json({
@@ -40,12 +42,15 @@ router.get('/api/review/user/:userId/game/:gameId', async (req, res) => {
         message: 'Review found',
         review,
       });
-    } else {
-      res.status(404).json({ message: 'Review not found' });
     }
+    return res.status(404).json({
+      message: 'Review not found',
+    });
   } catch (error) {
-    console.error('Error fetching user reviews:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    console.error('Error fetching user reviews: ', error);
+    return res.status(500).json({
+      error: 'Internal Server Error',
+    });
   }
 });
 
@@ -58,7 +63,9 @@ router.post('/api/reviews/create',
   async (req, res) => {
     const validationErrors = validationResult(req);
     if (!validationErrors.isEmpty()) {
-      return res.status(400).json({ message: 'Failed request data validation' });
+      return res.status(400).json({
+        message: 'Failed request data validation',
+      });
     }
     try {
       const game = await prisma.game.findFirst({
@@ -67,7 +74,9 @@ router.post('/api/reviews/create',
         },
       });
       if (!game) {
-        return res.status(404).json({ message: 'Game not found' });
+        return res.status(404).json({
+          message: 'Game not found',
+        });
       }
       const review = await prisma.review.findFirst({
         where: {
@@ -75,9 +84,16 @@ router.post('/api/reviews/create',
         },
       });
       if (review) {
-        return res.status(409).json({ message: 'Review already exists' });
+        return res.status(409).json({
+          message: 'Review already exists',
+        });
       }
-      const { authorId, title, description, rating } = req.body;
+      const {
+        authorId,
+        title,
+        description,
+        rating,
+      } = req.body;
       const newReview = await prisma.review.create({
         data: {
           author_id: authorId,
@@ -88,17 +104,20 @@ router.post('/api/reviews/create',
         },
       });
       if (newReview) {
-        res.status(201).json({
+        return res.status(201).json({
           success: true,
           message: 'Review added successfully',
           review: newReview,
         });
-      } else {
-        return res.status(500).json({ message: 'Failed to create a new review' });
       }
+      return res.status(500).json({
+        message: 'Failed to create a new review',
+      });
     } catch (error) {
-      console.error('Error creating a new review:', error);
-      res.status(500).json({ message: 'Internal server error' });
+      console.error('Error creating a new review: ', error);
+      res.status(500).json({
+        message: 'Internal server error',
+      });
     }
 });
 
@@ -111,16 +130,22 @@ router.patch('/api/reviews/update/:id',
   async (req, res) => {
     const validationErrors = validationResult(req);
     if (!validationErrors.isEmpty()) {
-      return res.status(400).json({ message: 'Failed request data validation' });
+      return res.status(400).json({
+        message: 'Failed request data validation',
+      });
     }
     try {
       const gameId = req.params?.id;
       if (!gameId) {
-        return res.status(404).json({ message: 'No review ID was provided in the request' });
+        return res.status(404).json({
+          message: 'No review ID was provided in the request',
+        });
       }
       const intGameId = parseInt(gameId);
       if (isNaN(intGameId)) {
-        return res.status(404).json({ message: 'Provided review ID is not a number' });
+        return res.status(404).json({
+          message: 'Provided review ID is not a number',
+        });
       }
       const review = await prisma.review.findFirst({
         where: {
@@ -128,9 +153,16 @@ router.patch('/api/reviews/update/:id',
         },
       });
       if (!review) {
-        return res.status(404).json({ message: 'Review doesn\'t exist' });
+        return res.status(404).json({
+          message: 'Review doesn\'t exist',
+        });
       }
-      const { authorId, title, description, rating } = req.body;
+      const {
+        authorId,
+        title,
+        description,
+        rating,
+      } = req.body;
       const newReview = await prisma.review.update({
         where: {
           id: review.id,
@@ -149,12 +181,15 @@ router.patch('/api/reviews/update/:id',
           message: 'Review updated successfully',
           review: newReview,
         });
-      } else {
-        return res.status(500).json({ message: 'Failed to edit the review' });
       }
+      return res.status(500).json({
+        message: 'Failed to edit the review',
+      });
     } catch (error) {
-      console.error('Error updating the review:', error);
-      res.status(500).json({ message: 'Internal server error' });
+      console.error('Error updating the review: ', error);
+      res.status(500).json({
+        message: 'Internal server error',
+      });
     }
 });
 

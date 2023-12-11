@@ -29,7 +29,7 @@ model Game {
 model Review {
   id          Int    @id @default(autoincrement())
   author      User   @relation(fields: [author_id], references: [id])
-  author_id   Int
+  author_username   String
   game        Game   @relation(fields: [game_id], references: [id])
   game_id     Int
   title       String
