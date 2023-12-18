@@ -55,7 +55,7 @@ router.get('/api/reviews/:username', async (req, res) => {
 });
 
 router.post('/api/reviews/create',
-  body('authorId').exists().isNumeric(),
+  body('username').exists().isString(),
   body('gameSlug').exists().isString(),
   body('title').exists().isString(),
   body('description').exists().isString(),
@@ -88,15 +88,17 @@ router.post('/api/reviews/create',
           message: 'Review already exists',
         });
       }
+
       const {
-        authorId,
+        username,
         title,
         description,
         rating,
       } = req.body;
+
       const newReview = await prisma.review.create({
         data: {
-          author_id: authorId,
+          author_username: username,
           game_id: game.id,
           title,
           description,
@@ -122,7 +124,7 @@ router.post('/api/reviews/create',
 });
 
 router.patch('/api/reviews/update/:id',
-  body('authorId').exists().isNumeric(),
+  body('username').exists().isString(),
   body('title').exists().isString(),
   body('description').exists().isString(),
   body('rating').exists().isNumeric(),
@@ -158,7 +160,7 @@ router.patch('/api/reviews/update/:id',
         });
       }
       const {
-        authorId,
+        username,
         title,
         description,
         rating,
@@ -168,7 +170,7 @@ router.patch('/api/reviews/update/:id',
           id: review.id,
         },
         data: {
-          author_id: authorId,
+          author_username: username,
           game_id: gameId,
           title,
           description,

@@ -7,6 +7,7 @@
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node dist/server.js",
+    "dev": "ts-node src/server.ts",
     "truncate": "ts-node prisma/truncate.ts",
     "reset-db": "npm run truncate && npx prisma db push && npx prisma db seed"
   },

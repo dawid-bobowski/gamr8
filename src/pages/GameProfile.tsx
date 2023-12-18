@@ -110,7 +110,7 @@ const GameProfile: FC = () => {
         className='d-flex flex-column justify-content-center align-items-center py-4 px-5 gap-4 w-100'
         style={{ minWidth: 300, maxWidth: 1000, backgroundColor: '#2f2f3d' }}
       >
-        {currentUser && isReviewEditing && <GameReview authorId={currentUser.id} gameSlug={slug} />}
+        {currentUser && isReviewEditing && <GameReview username={currentUser.username} gameSlug={slug} />}
       </div>
     </div>
   );

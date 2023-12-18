@@ -5,12 +5,12 @@ import { FaStar } from 'react-icons/fa';
 import api from '../api';
 
 interface GameReviewProps {
-  authorId: number;
+  username: string;
   gameSlug: string;
 }
 
 const GameReview = (props: GameReviewProps): JSX.Element => {
-  const { authorId, gameSlug } = props;
+  const { username, gameSlug } = props;
   const [title, setTitle] = useState<string>('');
   const [description, setDescription] = useState<string>('');
   const [rating, setRating] = useState<number>(0);
@@ -31,7 +31,7 @@ const GameReview = (props: GameReviewProps): JSX.Element => {
     }
     try {
       const response = await api.post('/api/reviews/create', {
-        authorId,
+        username,
         gameSlug,
         title,
         description,
