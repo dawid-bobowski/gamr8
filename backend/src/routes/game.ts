@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { Game, PrismaClient } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
 
 const router = Router();
 const prisma = new PrismaClient();
@@ -17,7 +17,7 @@ router.get('/api/games', async (req, res) => {
 router.get('/api/games/:slug', async (req, res) => {
   try {
     const slug: string = req.params.slug;
-    const game: Game | null = await prisma.game.findUnique({
+    const game = await prisma.game.findUnique({
       where: {
         slug,
       },
