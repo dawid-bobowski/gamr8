@@ -123,12 +123,13 @@ router.post('/api/reviews/create',
     }
 });
 
-router.patch('/api/reviews/update/:id',
-  body('username').exists().isString(),
+router.patch('/api/reviews/update/:username/:gameSlug',
   body('title').exists().isString(),
   body('description').exists().isString(),
   body('rating').exists().isNumeric(),
-  param('id').exists().isNumeric(),
+  body('reviewId').exists().isNumeric(),
+  param('gameSlug').exists().isString(),
+  param('username').exists().isString(),
   async (req, res) => {
     const validationErrors = validationResult(req);
     if (!validationErrors.isEmpty()) {
@@ -137,21 +138,21 @@ router.patch('/api/reviews/update/:id',
       });
     }
     try {
-      const gameId = req.params?.id;
-      if (!gameId) {
+      const reviewId = req.body.reviewId;
+      if (!reviewId) {
         return res.status(404).json({
           message: 'No review ID was provided in the request',
         });
       }
-      const intGameId = parseInt(gameId);
-      if (isNaN(intGameId)) {
+      const intReviewId = parseInt(reviewId);
+      if (isNaN(intReviewId)) {
         return res.status(404).json({
           message: 'Provided review ID is not a number',
         });
       }
       const review = await prisma.review.findFirst({
         where: {
-          game_id: intGameId,
+          id: intReviewId,
         },
       });
       if (!review) {
@@ -159,26 +160,26 @@ router.patch('/api/reviews/update/:id',
           message: 'Review doesn\'t exist',
         });
       }
+
       const {
-        username,
         title,
         description,
         rating,
       } = req.body;
+
       const newReview = await prisma.review.update({
         where: {
           id: review.id,
         },
         data: {
-          author_username: username,
-          game_id: gameId,
+          author_username: req.params?.username,
           title,
           description,
           rating,
         },
       });
       if (newReview) {
-        res.status(200).json({
+        return res.status(200).json({
           success: true,
           message: 'Review updated successfully',
           review: newReview,

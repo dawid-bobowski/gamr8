@@ -3,17 +3,19 @@ import { AxiosError } from 'axios';
 import { FaStar } from 'react-icons/fa';
 
 import api from '../api';
+import { Review } from '../common/types';
 
 interface GameReviewProps {
   username: string;
   gameSlug: string;
+  review: Review | null;
 }
 
 const GameReview = (props: GameReviewProps): JSX.Element => {
-  const { username, gameSlug } = props;
-  const [title, setTitle] = useState<string>('');
-  const [description, setDescription] = useState<string>('');
-  const [rating, setRating] = useState<number>(0);
+  const { username, gameSlug, review } = props;
+  const [title, setTitle] = useState<string>(review?.title ?? '');
+  const [description, setDescription] = useState<string>(review?.description ?? '');
+  const [rating, setRating] = useState<number>(review?.rating ?? 0);
   const [ratingHover, setRatingHover] = useState<number>(0);
   const [error, setError] = useState<string>('');
 
@@ -33,6 +35,45 @@ const GameReview = (props: GameReviewProps): JSX.Element => {
       const response = await api.post('/api/reviews/create', {
         username,
         gameSlug,
+        title,
+        description,
+        rating,
+      });
+      if (response.data.success) {
+        console.log(response.data.review);
+      } else {
+        setError(response.data.message);
+      }
+    } catch (error) {
+      let errorMessage = `Error sending request: `;
+      if (error instanceof AxiosError && error.response) {
+        errorMessage += error.response.data.message;
+      } else {
+        errorMessage += error;
+      }
+      setError(errorMessage);
+    }
+  }
+
+  const handleEditReview = async () => {
+    if (title === '') {
+      setError('Don\'t forget about the title!');
+      return;
+    }
+    if (description === '') {
+    // WARNING: Remove the following lines in production!
+    // if (reviewText === '' || reviewText.length < 300) {
+      // setError('Don\'t be shy, write at least 300 characters!');
+      setError('Wait, did you really forget about the review?');
+      return;
+    }
+    if (!review) {
+      setError('Something went wrong. Review doesn\'t exist');
+      return;
+    }
+    try {
+      const response = await api.patch(`/api/reviews/update/${username}/${gameSlug}`, {
+        reviewId: review.id,
         title,
         description,
         rating,
@@ -131,7 +172,7 @@ const GameReview = (props: GameReviewProps): JSX.Element => {
       </div>
       <button
         className='btn btn-primary w-auto px-5'
-        onClick={handleAddReview}
+        onClick={review ? handleEditReview : handleAddReview}
         disabled={description === '' || title === ''}
       >
         Publish

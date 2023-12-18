@@ -38,12 +38,18 @@ const GameProfile: FC = () => {
     }
 
     const getReview = async () => {
+      if (!currentUser) return;
       try {
-        const response = await api.get(`/api/games/${slug}`);
-        if (!response.data.game) {
+        const response = await api.get(`/api/reviews/${currentUser.username}`);
+        if (!response.data.reviews) {
           setError(response.data.message);
         } else {
-          setGame(response.data.game);
+          const currentGameReview: Review | undefined = response.data.reviews.find(
+            (review: Review) => review.author_username === currentUser.username
+          );
+          if (currentGameReview) {
+            setReview(currentGameReview);
+          }
           error && setError('');
         }
       } catch (error) {
@@ -58,7 +64,9 @@ const GameProfile: FC = () => {
     }
 
     getGame();
-    getReview();
+    if (currentUser) {
+      getReview();
+    }
   }, []);
 
   if (!slug) {
@@ -110,7 +118,11 @@ const GameProfile: FC = () => {
         className='d-flex flex-column justify-content-center align-items-center py-4 px-5 gap-4 w-100'
         style={{ minWidth: 300, maxWidth: 1000, backgroundColor: '#2f2f3d' }}
       >
-        {currentUser && isReviewEditing && <GameReview username={currentUser.username} gameSlug={slug} />}
+        {currentUser && isReviewEditing && <GameReview
+          username={currentUser.username}
+          gameSlug={slug}
+          review={review}
+        />}
       </div>
     </div>
   );

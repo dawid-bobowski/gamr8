@@ -9,8 +9,8 @@ export interface Game {
 
 export interface Review {
   id: number;
-  authorId: number;
-  gameId: number
+  author_username: string;
+  game_id: number
   title: string;
   description: string;
   rating: number;
