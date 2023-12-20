@@ -6,7 +6,7 @@ import { AxiosError } from 'axios';
 import { useAuth } from '../auth/useAuth';
 import api from '../api';
 import { Game, Review } from '../common/types';
-import GameReview from '../components/GameReview';
+import GameReviewEdit from '../components/GameReviewEdit';
 
 const GameProfile: FC = () => {
   const { currentUser } = useAuth();
@@ -115,7 +115,7 @@ const GameProfile: FC = () => {
         className='d-flex flex-column justify-content-center align-items-center py-4 px-5 gap-4 w-100'
         style={{ minWidth: 300, maxWidth: 1000, backgroundColor: '#2f2f3d' }}
       >
-        {currentUser && isReviewEditing && <GameReview
+        {currentUser && isReviewEditing && <GameReviewEdit
           username={currentUser.username}
           gameSlug={slug}
           review={review}
@@ -123,6 +123,12 @@ const GameProfile: FC = () => {
           isReviewEditing={isReviewEditing}
           setIsReviewEditing={setIsReviewEditing}
         />}
+        {currentUser && !isReviewEditing && review && <div>
+          <h2>„{review.title}"</h2>
+          <h3>by {review.author_username}</h3>
+          <p>{review.description}</p>
+          <p>{review.rating}/10</p>
+        </div>}
       </div>
     </div>
   );

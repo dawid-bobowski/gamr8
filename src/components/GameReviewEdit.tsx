@@ -5,7 +5,7 @@ import { FaStar } from 'react-icons/fa';
 import api from '../api';
 import { Review } from '../common/types';
 
-interface GameReviewProps {
+interface GameReviewEditProps {
   username: string;
   gameSlug: string;
   review: Review | null;
@@ -14,7 +14,7 @@ interface GameReviewProps {
   setIsReviewEditing: Dispatch<SetStateAction<boolean>>;
 }
 
-const GameReview = (props: GameReviewProps): JSX.Element => {
+const GameReviewEdit = (props: GameReviewEditProps): JSX.Element => {
   const { username, gameSlug, review } = props;
   const [title, setTitle] = useState<string>(review?.title ?? '');
   const [description, setDescription] = useState<string>(review?.description ?? '');
@@ -195,4 +195,4 @@ const GameReview = (props: GameReviewProps): JSX.Element => {
   )
 }
 
-export default GameReview;
+export default GameReviewEdit;
