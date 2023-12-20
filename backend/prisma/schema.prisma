@@ -33,6 +33,6 @@ model Review {
   game            Game   @relation(fields: [game_id], references: [id])
   game_id         Int
   title           String
-  description     String
+  description     String @db.Text
   rating          Int
 }
