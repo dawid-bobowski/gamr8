@@ -45,9 +45,7 @@ const GameProfile: FC = () => {
       if (!currentUser || !game) return;
       try {
         const response = await api.get(`/api/reviews/${currentUser.username}?gameId=${game?.id}`);
-        if (!response.data.review) {
-          setError(response.data.message);
-        } else {
+        if (response.data.review) {
           const currentGameReview: Review | undefined = response.data.review;
           if (currentGameReview) {
             setReview(currentGameReview);

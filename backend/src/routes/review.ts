@@ -30,8 +30,10 @@ router.get('/api/reviews/:username', async (req, res) => {
           reviews,
         });
       }
-      return res.status(404).json({
-        message: 'There are no reviews yet',
+      return res.status(200).json({
+        success: true,
+        message: 'Reviews not found',
+        reviews: [],
       });
     }
     queryFilter.game_id = parseInt(gameId);
@@ -45,8 +47,10 @@ router.get('/api/reviews/:username', async (req, res) => {
         review,
       });
     }
-    return res.status(404).json({
+    return res.status(200).json({
+      success: true,
       message: 'Review not found',
+      review: null,
     });
   } catch (error) {
     console.error('Error fetching user reviews: ', error);
