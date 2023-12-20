@@ -10,6 +10,8 @@ interface QueryFilters {
   game_id?: number;
 }
 
+// GET /api/reviews/user
+// GET /api/reviews/user?gameId=123
 router.get('/api/reviews/:username', async (req, res) => {
   try {
     const username = req.params.username;

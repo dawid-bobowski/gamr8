@@ -37,16 +37,18 @@ const GameProfile: FC = () => {
       }
     }
 
+    getGame();
+  }, []);
+
+  useEffect(() => {
     const getReview = async () => {
-      if (!currentUser) return;
+      if (!currentUser || !game) return;
       try {
-        const response = await api.get(`/api/reviews/${currentUser.username}`);
-        if (!response.data.reviews) {
+        const response = await api.get(`/api/reviews/${currentUser.username}?gameId=${game?.id}`);
+        if (!response.data.review) {
           setError(response.data.message);
         } else {
-          const currentGameReview: Review | undefined = response.data.reviews.find(
-            (review: Review) => review.author_username === currentUser.username
-          );
+          const currentGameReview: Review | undefined = response.data.review;
           if (currentGameReview) {
             setReview(currentGameReview);
           }
@@ -63,11 +65,8 @@ const GameProfile: FC = () => {
       }
     }
 
-    getGame();
-    if (currentUser) {
-      getReview();
-    }
-  }, []);
+    getReview();
+  }, [game]);
 
   if (!slug) {
     setError('No game slug was found');
@@ -122,6 +121,9 @@ const GameProfile: FC = () => {
           username={currentUser.username}
           gameSlug={slug}
           review={review}
+          setReview={setReview}
+          isReviewEditing={isReviewEditing}
+          setIsReviewEditing={setIsReviewEditing}
         />}
       </div>
     </div>

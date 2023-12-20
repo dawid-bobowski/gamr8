@@ -1,5 +1,5 @@
-import { useState, KeyboardEvent, useEffect } from 'react';
-import { AxiosError } from 'axios';
+import { useState, KeyboardEvent, useEffect, Dispatch, SetStateAction } from 'react';
+import { AxiosError, AxiosResponse } from 'axios';
 import { FaStar } from 'react-icons/fa';
 
 import api from '../api';
@@ -9,6 +9,9 @@ interface GameReviewProps {
   username: string;
   gameSlug: string;
   review: Review | null;
+  setReview: Dispatch<SetStateAction<Review | null>>;
+  isReviewEditing: boolean;
+  setIsReviewEditing: Dispatch<SetStateAction<boolean>>;
 }
 
 const GameReview = (props: GameReviewProps): JSX.Element => {
@@ -32,15 +35,20 @@ const GameReview = (props: GameReviewProps): JSX.Element => {
       return;
     }
     try {
-      const response = await api.post('/api/reviews/create', {
+      const response: AxiosResponse<{
+        message: string,
+        success?: boolean,
+        review?: Review,
+      }> = await api.post('/api/reviews/create', {
         username,
         gameSlug,
         title,
         description,
         rating,
       });
-      if (response.data.success) {
-        console.log(response.data.review);
+      if (response.data.success && response.data.review) {
+        props.setIsReviewEditing(!props.isReviewEditing);
+        props.setReview(response.data.review);
       } else {
         setError(response.data.message);
       }
@@ -72,14 +80,19 @@ const GameReview = (props: GameReviewProps): JSX.Element => {
       return;
     }
     try {
-      const response = await api.patch(`/api/reviews/update/${username}/${gameSlug}`, {
+      const response: AxiosResponse<{
+        message: string,
+        success?: boolean,
+        review?: Review,
+      }> = await api.patch(`/api/reviews/update/${username}/${gameSlug}`, {
         reviewId: review.id,
         title,
         description,
         rating,
       });
-      if (response.data.success) {
-        console.log(response.data.review);
+      if (response.data.success && response.data.review) {
+        props.setIsReviewEditing(!props.isReviewEditing);
+        props.setReview(response.data.review);
       } else {
         setError(response.data.message);
       }
