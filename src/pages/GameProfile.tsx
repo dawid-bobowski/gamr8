@@ -125,9 +125,9 @@ const GameProfile: FC = () => {
         />}
         {currentUser && !isReviewEditing && review && <div>
           <h2>„{review.title}"</h2>
-          <h3>by {review.author_username}</h3>
-          <p>{review.description}</p>
+          <h3 className='text-end'>by {review.author_username}</h3>
           <p>{review.rating}/10</p>
+          <p style={{ whiteSpace: 'pre-wrap', textAlign: 'justify' }}>{review.description}</p>
         </div>}
       </div>
     </div>
