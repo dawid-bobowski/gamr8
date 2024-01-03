@@ -35,4 +35,5 @@ model Review {
   title           String
   description     String @db.Text
   rating          Int
+  date_posted     DateTime @default(now())
 }
