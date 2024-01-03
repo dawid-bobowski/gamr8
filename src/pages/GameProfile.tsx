@@ -127,6 +127,7 @@ const GameProfile: FC = () => {
           <h2>„{review.title}"</h2>
           <p>{review.rating}/10</p>
           <p style={{ whiteSpace: 'pre-wrap', textAlign: 'justify' }}>{review.description}</p>
+          <p>created at {review?.date_posted.toString().substring(0, 10)}</p>
         </div>}
       </div>
     </div>

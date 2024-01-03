@@ -14,4 +14,5 @@ export interface Review {
   title: string;
   description: string;
   rating: number;
+  date_posted: Date;
 }
