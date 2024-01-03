@@ -76,9 +76,9 @@ const GameProfile: FC = () => {
   </div>
 
   return (
-    <div className='d-flex flex-column align-items-center mt-5'>
+    <div className='d-flex flex-column align-items-center mt-5' style={{ fontSize: '14px' }}>
       <div
-        className='d-flex align-items-start justify-content-center p-5 gap-5 w-100'
+        className='d-flex align-items-start justify-content-center p-3 gap-5 w-100'
         style={{ minWidth: 300, maxWidth: 1000, backgroundColor: '#2a2936' }}
       >
         <div
@@ -91,14 +91,14 @@ const GameProfile: FC = () => {
           />
         </div>
         <div className='flex-1 w-100 h-100 d-flex flex-column justify-content-center h-100'>
-          <h1 className='display-5 text-primary'>{game?.title ?? '<title>'}</h1>
+          
         </div>
         <div
           id='game-info'
           className='flex-1 w-100 align-self-center d-flex flex-column gap-1 mt-3'
-          style={{ width: '15rem' }}
+          style={{ minWidth: '15rem' }}
         >
-          <p>Release year: {game?.year ?? '<year>'}</p>
+          <h1 className='display-6 text-primary'>{`${game?.title} (${game?.year})`}</h1>
           <p>{game?.description ?? '<description>'}</p>
           <div
             id='game-buttons'
@@ -106,13 +106,13 @@ const GameProfile: FC = () => {
             style={{ width: '15rem' }}
           >
             <button type='button' onClick={() => setIsReviewEditing(!isReviewEditing)}>
-              {review ? 'Edit Review' : 'Write Review'}
+              {review ? (isReviewEditing ? 'Cancel Editing' : 'Edit Review') : (isReviewEditing ? 'Cancel Review' : 'Write Review')}
             </button>
           </div>
         </div>
       </div>
       <div
-        className='d-flex flex-column justify-content-center align-items-center py-4 px-5 gap-4 w-100'
+        className='d-flex flex-column justify-content-center align-items-start py-3 px-4 gap-4 w-100'
         style={{ minWidth: 300, maxWidth: 1000, backgroundColor: '#2f2f3d' }}
       >
         {currentUser && isReviewEditing && <GameReviewEdit
@@ -125,7 +125,6 @@ const GameProfile: FC = () => {
         />}
         {currentUser && !isReviewEditing && review && <div>
           <h2>„{review.title}"</h2>
-          <h3 className='text-end'>by {review.author_username}</h3>
           <p>{review.rating}/10</p>
           <p style={{ whiteSpace: 'pre-wrap', textAlign: 'justify' }}>{review.description}</p>
         </div>}
