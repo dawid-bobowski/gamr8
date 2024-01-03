@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { PrismaClient, User } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
 
 const router = Router();
 const prisma = new PrismaClient();
@@ -19,16 +19,26 @@ router.get('/api/users', async (req, res) => {
 router.get('/api/user/:username', async (req, res) => {
   try {
     const username: string = req.params.username;
-    const user: User | null = await prisma.user.findFirst({
+    const userWithRecentReviews = await prisma.user.findFirst({
       where: {
         username,
       },
+      select: {
+        username: true,
+        email: true,
+        reviews: {
+          take: 3,
+          orderBy: {
+            date_posted: 'desc',
+          },
+        },
+      },
     });
-    if (user) {
+    if (userWithRecentReviews) {
       return res.status(200).json({
         success: true,
         message: 'User found',
-        user,
+        user: userWithRecentReviews,
       });
     }
     return res.status(200).json({
