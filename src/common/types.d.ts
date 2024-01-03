@@ -16,3 +16,9 @@ export interface Review {
   rating: number;
   date_posted: Date;
 }
+
+export interface User {
+  username: string;
+  email: string;
+  reviews: Review[];
+}
