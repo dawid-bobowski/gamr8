@@ -1,12 +1,10 @@
+import { FC, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import React, { useEffect, useRef } from 'react';
 import { Image } from 'react-bootstrap';
 
 import { useAuth } from '../auth/useAuth';
-
-// import DefaultProfilePic from '../assets/default-user.png';
-import UserPic from '../assets/users/user-8.png';
 import Logo from '/gamr8-white.png';
+import { DEFAULT_AVATAR_URL } from '../common/constants';
 
 type BootstrapWindow = {
   bootstrap: {
@@ -18,7 +16,7 @@ interface BootstrapCollapse {
   hide: () => void;
 }
 
-const Header: React.FC = () => {
+const Header: FC = () => {
   const { currentUser, logout } = useAuth();
   const navigate = useNavigate();
 
@@ -87,9 +85,11 @@ const Header: React.FC = () => {
                 <Link className='nav-link' to='/dashboard'>Dashboard</Link>
               </li>
             </ul>
-            <button type='button' className='me-2 p-0 rounded-circle' onClick={handleProfilePicClick}>
-              <Image roundedCircle src={UserPic} width={38} height={38} />
-            </button>
+            {currentUser && (
+              <button type='button' className='me-2 p-0 rounded-circle' onClick={handleProfilePicClick}>
+                <Image roundedCircle src={currentUser.avatarUrl ?? DEFAULT_AVATAR_URL} width={38} height={38} />
+              </button>
+            )}
             <div className='buttons d-flex justify-content-center p-2 mt-4 p-lg-0 mt-lg-0'>
               {!currentUser ? (
                 <>

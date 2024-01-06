@@ -157,7 +157,7 @@ router.post('/api/users/:username/upload-avatar', uploadHandler, async (req, res
       });
     }
 
-    const webAvatarUrl = `gamr8.net/users/avatars/${username}.${getFileExtension(req.file.originalname)}`;
+    const webAvatarUrl = `https://gamr8.net/users/avatars/${username}.${getFileExtension(req.file.originalname)}`;
     const newAvatar = await prisma.user.update({
       where: {
         id: user.id,

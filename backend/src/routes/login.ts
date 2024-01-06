@@ -38,22 +38,69 @@ router.post('/register', async (req: Request, res: Response) => {
 });
 
 router.post('/login', async (req: Request, res: Response) => {
-  const { username, password } = req.body;
+  const {
+    username,
+    password,
+  } = req.body;
+
   try {
-    const user = await prisma.user.findUnique({ where: { username: username } });
-    if (!user) {
-      return res.status(400).json({ message: 'User not found' });
-    }
-    const passwordIsValid = await bcrypt.compare(password, user.password);
-    if (!passwordIsValid) {
-      return res.status(401).json({ message: 'Invalid password' });
-    }
-    const token = jwt.sign({ id: user.id }, JWT_SECRET, {
-      expiresIn: 86400,
+    const userWithRecentReviews = await prisma.user.findFirst({
+      where: {
+        username,
+      },
+      select: {
+        id: true,
+        username: true,
+        email: true,
+        password: true,
+        avatarUrl: true,
+        reviews: {
+          take: 3,
+          orderBy: {
+            date_posted: 'desc',
+          },
+        },
+      },
     });
-    return res.status(200).json({ success: true, accessToken: token, user: { id: user.id, username: username } });
+
+    if (!userWithRecentReviews) {
+      return res.status(400).json({
+        message: 'User not found',
+      });
+    }
+
+    const passwordIsValid = await bcrypt.compare(password, userWithRecentReviews.password);
+
+    if (!passwordIsValid) {
+      return res.status(401).json({
+        message: 'Invalid password',
+      });
+    }
+
+    const token = jwt.sign(
+      {
+        id: userWithRecentReviews.id,
+      },
+      JWT_SECRET,
+      {
+        expiresIn: 86400,
+      },
+    );
+
+    return res.status(200).json({
+      success: true,
+      accessToken: token,
+      user: {
+        id: userWithRecentReviews.id,
+        username,
+        avatarUrl: userWithRecentReviews.avatarUrl,
+        reviews: userWithRecentReviews.reviews,
+      },
+    });
   } catch (error) {
-    return res.status(500).json({ message: 'Server error' });
+    return res.status(500).json({
+      message: 'Internal Server Error',
+    });
   }
 });
 

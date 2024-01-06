@@ -1,0 +1,1 @@
+export const DEFAULT_AVATAR_URL = 'https://gamr8.net/users/default-avatar.png';

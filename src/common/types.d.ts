@@ -21,4 +21,5 @@ export interface User {
   username: string;
   email: string;
   reviews: Review[];
+  avatarUrl: string;
 }

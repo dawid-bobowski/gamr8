@@ -1,9 +1,11 @@
 import { createContext, ReactNode, useState } from 'react';
+import { Review } from '../common/types';
 
 interface User {
   id: number;
   username: string;
-  // Add other user properties if needed
+  reviews: Review[];
+  avatarUrl: string;
 }
 
 export interface AuthContextType {
