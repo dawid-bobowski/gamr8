@@ -1,6 +1,6 @@
+import { FC, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Image } from 'react-bootstrap';
-import { FC, useEffect, useState } from 'react';
 import { AxiosError } from 'axios';
 
 import { useAuth } from '../auth/useAuth';
@@ -20,19 +20,23 @@ const GameProfile: FC = () => {
     const getGame = async () => {
       try {
         const response = await api.get(`/api/games/${slug}`);
+
         if (!response.data.game) {
           setError(response.data.message);
-        } else {
-          setGame(response.data.game);
-          error && setError('');
+          return;
         }
+
+        setGame(response.data.game);
+        error && setError('');
       } catch (error) {
         let errorMessage = `Error sending request: `;
+
         if (error instanceof AxiosError && error.response) {
           errorMessage += error.response.data.message;
         } else {
           errorMessage += error;
         }
+
         setError(errorMessage);
       }
     }
@@ -43,8 +47,10 @@ const GameProfile: FC = () => {
   useEffect(() => {
     const getReview = async () => {
       if (!currentUser || !game) return;
+
       try {
         const response = await api.get(`/api/reviews/${currentUser.username}?gameId=${game?.id}`);
+
         if (response.data.review) {
           const currentGameReview: Review | undefined = response.data.review;
           if (currentGameReview) {

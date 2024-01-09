@@ -91,6 +91,7 @@ router.get('/api/user/:username', async (req, res) => {
       select: {
         username: true,
         email: true,
+        avatarUrl: true,
         reviews: {
           take: 3,
           orderBy: {
@@ -99,6 +100,7 @@ router.get('/api/user/:username', async (req, res) => {
         },
       },
     });
+
     if (userWithRecentReviews) {
       return res.status(200).json({
         success: true,
@@ -106,9 +108,10 @@ router.get('/api/user/:username', async (req, res) => {
         user: userWithRecentReviews,
       });
     }
+
     return res.status(200).json({
       success: true,
-      message: 'User not found',
+      message: 'User doesn\'t exist',
       user: null,
     });
   } catch (error) {

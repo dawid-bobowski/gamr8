@@ -9,17 +9,26 @@ const JWT_SECRET = process.env.JWT_SECRET || 'very-secret-key';
 
 router.post('/register', async (req: Request, res: Response) => {
   const { username, email, password } = req.body;
+
   try {
     // Check if the user already exists
-    const existingUser = await prisma.user.findUnique({ where: { email } });
+    const existingUser = await prisma.user.findUnique({
+      where: {
+        email,
+      },
+    });
+
     if (existingUser) {
       return res.status(409).json({ message: 'User already exists' });
     }
+
     // Hash the password
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
+
     // WARNING: Remove the following line in production!
     console.log(hashedPassword);
+
     const newUser = await prisma.user.create({
       data: {
         username,
@@ -27,13 +36,20 @@ router.post('/register', async (req: Request, res: Response) => {
         password: hashedPassword,
       },
     });
+
     res.status(201).json({
       message: 'User was successfully created',
       success: true,
-      user: { id: newUser.id, username, email },
+      user: {
+        id: newUser.id,
+        username,
+        email,
+      },
     });
   } catch (error) {
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({
+      message: 'Internal Server Error',
+    });
   }
 });
 
@@ -93,6 +109,7 @@ router.post('/login', async (req: Request, res: Response) => {
       user: {
         id: userWithRecentReviews.id,
         username,
+        email: userWithRecentReviews.email,
         avatarUrl: userWithRecentReviews.avatarUrl,
         reviews: userWithRecentReviews.reviews,
       },
@@ -108,7 +125,10 @@ router.post('/logout', (req: Request, res: Response) => {
   // Typically, logging out on the server side means invalidating the token.
   // Since JWT is stateless and if you're not using a token blacklist,
   // logout is often handled on the client side by simply removing the token from client storage.
-  res.json({ success: true, message: 'Logged out successfully' });
+  res.json({
+    success: true,
+    message: 'Logged out successfully',
+  });
 });
 
 export default router;

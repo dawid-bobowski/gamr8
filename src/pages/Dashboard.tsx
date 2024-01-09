@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 
 import Recommendations from '../components/Recommendations';
 import SearchBar from '../components/SearchBar';
-
 import { useAuth } from '../auth/useAuth';
 
 const Dashboard: React.FC = () => {
