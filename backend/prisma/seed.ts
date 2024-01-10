@@ -16,19 +16,19 @@ const users: PrismaUser[] = [
     username: 'dave',
     email: 'dave@gamr8.net',
     password: '$2a$10$DISJw/kBVWAwCyfuSbWaEe8DI/h97ALlMF7gnZtSpAcr7gVxmGW.G', // 123
-    avatarUrl: '',
+    avatarUrl: 'https://gamr8.net/users/avatars/dave.png',
   },
   {
     username: 'wazyli',
     email: 'wazyli@gamr8.net',
     password: '$2a$10$rpSBAz7S1FumWF7VvyRax.vi1Ao0GFpDX3LYxsQEaaevWLDlR0dWu', // 123
-    avatarUrl: '',
+    avatarUrl: 'https://gamr8.net/users/avatars/wazyli.png',
   },
   {
     username: 'xardas',
     email: 'xardas@gamr8.net',
     password: '$2a$10$6Eex9T.4ago1s7buheuom.krAuxrExgnCJfVxdvkpPH/GRqU1W9GW', // 123
-    avatarUrl: '',
+    avatarUrl: 'https://gamr8.net/users/avatars/xardas.png',
   },
 ];
 
