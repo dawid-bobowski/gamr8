@@ -40,6 +40,7 @@ const Header: FC = () => {
   };
 
   const handleProfilePicClick = () => {
+    toggleMobileMenu();
     navigate('/profile');
   }
 
@@ -82,7 +83,7 @@ const Header: FC = () => {
           <div ref={navbarMenuRef} className='collapse navbar-collapse justify-content-end' id='navbarNav'>
             <ul className='navbar-nav mr-auto'>
               <li className='nav-item'>
-                <Link className='nav-link' to='/dashboard'>Dashboard</Link>
+                <Link className='nav-link' to='/dashboard' onClick={toggleMobileMenu}>Dashboard</Link>
               </li>
             </ul>
             {currentUser && (
