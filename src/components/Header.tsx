@@ -81,13 +81,20 @@ const Header: FC = () => {
             <span className='navbar-toggler-icon'></span>
           </button>
           <div ref={navbarMenuRef} className='collapse navbar-collapse justify-content-end' id='navbarNav'>
-            <ul className='navbar-nav mr-auto py-2'>
+            <ul className='navbar-nav mr-auto py-2 gap-2'>
               {currentUser && (
-                <Link className='nav-link d-flex justify-content-center w-100 rounded' to='/dashboard' onClick={toggleMobileMenu}  style={{ backgroundColor: '#fafafa' }}>
-                  <li className='nav-item'>
-                    Dashboard
-                  </li>
-                </Link>
+                <>
+                  <Link className='nav-link d-flex justify-content-center w-100 rounded' to='/dashboard' onClick={toggleMobileMenu}  style={{ backgroundColor: '#fafafa' }}>
+                    <li className='nav-item'>
+                      Dashboard
+                    </li>
+                  </Link>
+                  <Link className='nav-link d-flex justify-content-center w-100 rounded' to='/profile' onClick={toggleMobileMenu}  style={{ backgroundColor: '#fafafa' }}>
+                    <li className='nav-item'>
+                      Profile
+                    </li>
+                  </Link>
+                </>
               )}
             </ul>
             {currentUser && (
