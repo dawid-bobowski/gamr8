@@ -37,6 +37,7 @@ interface PrismaGame {
   slug: string;
   description: string;
   year: number;
+  imageUrl: string;
 }
 
 const games: PrismaGame[] = [
@@ -49,6 +50,7 @@ const games: PrismaGame[] = [
       goal is to eliminate eight key targets before the day resets. Its unique gameplay mechanic centers around \
       learning from each loop to devise the perfect strategy.',
     year: 2021,
+    imageUrl: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co4nzt.png',
   },
   {
     title: 'Elden Ring',
@@ -59,6 +61,7 @@ const games: PrismaGame[] = [
     the Elden Lord. The game features vast landscapes, complex dungeons, and a blend of magic and combat with a high \
     degree of customization.',
     year: 2022,
+    imageUrl: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co4jni.png',
   },
   {
     title: 'World of Warcraft',
@@ -69,6 +72,7 @@ const games: PrismaGame[] = [
     world, completing quests, and interacting with other players. WoW is known for its expansive lore, regular \
     updates, and large-scale raids and dungeons.',
     year: 2004,
+    imageUrl: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co2l7z.png',
   },
   {
     title: 'The Sims 4',
@@ -79,6 +83,7 @@ const games: PrismaGame[] = [
     and personalities to the design of their homes. It\'s known for its open-ended gameplay, numerous expansion \
     packs, and the ability for players to share creations.',
     year: 2014,
+    imageUrl: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co3h3l.png',
   },
   {
     title: 'Final Fantasy XV',
@@ -88,6 +93,7 @@ const games: PrismaGame[] = [
     Noctis and his friends on a quest to reclaim his throne from an invading empire. The game combines real-time \
     combat with strategic elements, a deep narrative, and a vast world to explore.',
     year: 2016,
+    imageUrl: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co5w3k.png',
   },
   {
     title: 'God of War: Ragnarok',
@@ -98,6 +104,7 @@ const games: PrismaGame[] = [
     narrative focuses on themes of family and fate, as Kratos and Atreus face new gods and monsters in the backdrop \
     of the prophesied end of the world.',
     year: 2022,
+    imageUrl: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co5s5v.png',
   },
 ];
 

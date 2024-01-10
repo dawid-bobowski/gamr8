@@ -25,6 +25,7 @@ model Game {
   year        Int
   reviews     Review[]
   slug        String   @unique
+  imageUrl    String   @default("")
 }
 
 model Review {
