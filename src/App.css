@@ -43,3 +43,7 @@ main {
   background-color: #E384FF;
   border-color: #E384FF;
 }
+
+.nav-link {
+  color: #050505 !important;
+}

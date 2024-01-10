@@ -81,11 +81,13 @@ const Header: FC = () => {
             <span className='navbar-toggler-icon'></span>
           </button>
           <div ref={navbarMenuRef} className='collapse navbar-collapse justify-content-end' id='navbarNav'>
-            <ul className='navbar-nav mr-auto'>
+            <ul className='navbar-nav mr-auto py-2'>
               {currentUser && (
-                <li className='nav-item'>
-                  <Link className='nav-link' to='/dashboard' onClick={toggleMobileMenu}>Dashboard</Link>
-                </li>
+                <Link className='nav-link d-flex justify-content-center w-100 rounded' to='/dashboard' onClick={toggleMobileMenu}  style={{ backgroundColor: '#fafafa' }}>
+                  <li className='nav-item'>
+                    Dashboard
+                  </li>
+                </Link>
               )}
             </ul>
             {currentUser && (
@@ -93,7 +95,7 @@ const Header: FC = () => {
                 <Image roundedCircle src={currentUser.avatarUrl ?? DEFAULT_AVATAR_URL} width={38} height={38} />
               </button>
             )}
-            <div className='buttons d-flex justify-content-center p-2 mt-4 p-lg-0 mt-lg-0'>
+            <div className='buttons d-flex justify-content-center p-2 p-lg-0 mt-lg-0'>
               {!currentUser ? (
                 <>
                   <button className='btn btn-success me-2' onClick={handleLoginClick}>
@@ -104,7 +106,7 @@ const Header: FC = () => {
                   </button>
                 </>
               ) : (
-                <button className='btn btn-success me-2' onClick={handleLogoutClick}>
+                <button className='btn btn-success' onClick={handleLogoutClick}>
                   Logout
                 </button>
               )}
