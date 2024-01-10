@@ -11,19 +11,13 @@ interface GameCardProps {
 
 const GameCard: FC<GameCardProps> = ({ game }) => {
   const slug: string = titleToSlug(game.title);
+
   return (
-    <Card>
-      <Card.Img
-        variant='top'
-        src={game.imageUrl}
-      />
-      <Card.Body>
-        <Card.Title>
-          <Link to={`/game/${slug}`}>{game.title}</Link>
-        </Card.Title>
-        <Card.Text>{game.description}</Card.Text>
-      </Card.Body>
-    </Card>
+    <Link to={`/game/${slug}`}>
+      <Card>
+        <Card.Img variant='top' src={game.imageUrl} />
+      </Card>
+    </Link>
   );
 };
 

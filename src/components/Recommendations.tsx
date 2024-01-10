@@ -23,11 +23,11 @@ const Recommendations: FC = () => {
 
   return (
     <Container id='recommendations'>
-      <h3 className='display-5 text-primary mb-5'>AI picks for you</h3>
+      <h3 className='display-5 text-primary mb-3 text-center'>AI picks for you</h3>
       <Row className='d-flex justify-content-center g-3'>
         {games.map((game) => (
-          <Col key={game.id} md={4}>
-            <GameCard game={{ ...game, imageUrl: '' }} />
+          <Col key={game.id} xs={6}>
+            <GameCard game={game} />
           </Col>
         ))}
       </Row>
