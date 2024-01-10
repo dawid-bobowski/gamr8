@@ -82,12 +82,14 @@ const Header: FC = () => {
           </button>
           <div ref={navbarMenuRef} className='collapse navbar-collapse justify-content-end' id='navbarNav'>
             <ul className='navbar-nav mr-auto'>
-              <li className='nav-item'>
-                <Link className='nav-link' to='/dashboard' onClick={toggleMobileMenu}>Dashboard</Link>
-              </li>
+              {currentUser && (
+                <li className='nav-item'>
+                  <Link className='nav-link' to='/dashboard' onClick={toggleMobileMenu}>Dashboard</Link>
+                </li>
+              )}
             </ul>
             {currentUser && (
-              <button type='button' className='me-2 p-0 rounded-circle' onClick={handleProfilePicClick}>
+              <button type='button' className='d-none d-lg-inline-block me-2 p-0 rounded-circle' onClick={handleProfilePicClick}>
                 <Image roundedCircle src={currentUser.avatarUrl ?? DEFAULT_AVATAR_URL} width={38} height={38} />
               </button>
             )}
