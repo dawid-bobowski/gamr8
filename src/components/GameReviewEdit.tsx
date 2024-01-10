@@ -122,6 +122,9 @@ const GameReviewEdit = (props: GameReviewEditProps): JSX.Element => {
         target.selectionStart = target.selectionEnd = start + 1;
       }, 0);
     }
+    if (event.key === 'Enter') {
+      review ? handleEditReview() : handleAddReview();
+    }
   }
 
   useEffect(() => {
@@ -144,7 +147,7 @@ const GameReviewEdit = (props: GameReviewEditProps): JSX.Element => {
             onChange={(e) => setTitle(e.target.value)}
             />
         </div>
-        <div className='mb-3 w-100 d-flex align-items-center'>
+        <div className='mb-3 w-100 d-flex align-items-center justify-content-center py-3'>
           {[...Array(10)].map((_, index) => {
             const ratingValue = index + 1;
 
@@ -160,7 +163,7 @@ const GameReviewEdit = (props: GameReviewEditProps): JSX.Element => {
                 <FaStar
                   className='star'
                   color={ratingValue <= (ratingHover || rating) ? '#ffc107' : '#e4e5e9'}
-                  size={40}
+                  size={30}
                   onMouseEnter={() => setRatingHover(ratingValue)}
                   onMouseLeave={() => setRatingHover(0)}
                   />
@@ -184,7 +187,7 @@ const GameReviewEdit = (props: GameReviewEditProps): JSX.Element => {
         </div>
       </div>
       <button
-        className='btn btn-primary w-auto px-5'
+        className='btn btn-primary w-auto px-5 align-self-center'
         onClick={review ? handleEditReview : handleAddReview}
         disabled={description === '' || title === ''}
       >

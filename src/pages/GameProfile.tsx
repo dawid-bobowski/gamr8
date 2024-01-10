@@ -49,7 +49,7 @@ const GameProfile: FC = () => {
       if (!currentUser || !game) return;
 
       try {
-        const response = await api.get(`/api/reviews/${currentUser.username}?gameId=${game?.id}`);
+        const response = await api.get(`/api/reviews/${currentUser.username}?gameId=${game.id}`);
 
         if (response.data.review) {
           const currentGameReview: Review | undefined = response.data.review;
@@ -76,7 +76,7 @@ const GameProfile: FC = () => {
     setError('No game slug was found');
   }
 
-  if (error || !slug) return <div>
+  if (error || !slug || !game) return <div>
     <p>Error while fetching data!</p>
     <p>{error}</p>
   </div>
@@ -84,31 +84,20 @@ const GameProfile: FC = () => {
   return (
     <div className='d-flex flex-column align-items-center mt-5' style={{ fontSize: '14px' }}>
       <div
-        className='d-flex align-items-start justify-content-center p-3 gap-5 w-100'
+        className='d-flex flex-column align-items-center justify-content-center p-3 gap-2 w-100'
         style={{ minWidth: 300, maxWidth: 1000, backgroundColor: '#2a2936' }}
       >
-        <div
-          id='game-cover'
-          className='h-100'
-        >
-          <Image
-            src={''}
-            height={200}
-          />
-        </div>
-        <div className='flex-1 w-100 h-100 d-flex flex-column justify-content-center h-100'>
-          
+        <div className='game-cover flex-1 h-100'>
+          <Image className='img-fluid' src={game.imageUrl} />
         </div>
         <div
-          id='game-info'
-          className='flex-1 w-100 align-self-center d-flex flex-column gap-1 mt-3'
+          className='game-info flex-1 w-100 align-self-center d-flex flex-column gap-1'
           style={{ minWidth: '15rem' }}
         >
-          <h1 className='display-6 text-primary'>{`${game?.title} (${game?.year})`}</h1>
-          <p>{game?.description ?? '<description>'}</p>
+          <h1 className='display-6 text-primary text-center'>{`${game.title} (${game.year})`}</h1>
+          <p className='text-center'>{game.description}</p>
           <div
-            id='game-buttons'
-            className='flex-1 w-100 align-self-center d-flex flex-column gap-1 mt-3'
+            className='game-buttons flex-1 w-100 align-self-center d-flex flex-column gap-1 mt-3'
             style={{ width: '15rem' }}
           >
             <button type='button' onClick={() => setIsReviewEditing(!isReviewEditing)}>
@@ -133,7 +122,7 @@ const GameProfile: FC = () => {
           <h2>„{review.title}"</h2>
           <p>{review.rating}/10</p>
           <p style={{ whiteSpace: 'pre-wrap', textAlign: 'justify' }}>{review.description}</p>
-          <p>created at {review?.date_posted.toString().substring(0, 10)}</p>
+          <p>created at {review.date_posted.toString().substring(0, 10)}</p>
         </div>}
       </div>
     </div>
