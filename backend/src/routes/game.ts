@@ -1,20 +1,53 @@
-import { Router } from 'express';
-import { PrismaClient } from '@prisma/client';
+import { Request, Response, Router } from 'express';
+import { Game, PrismaClient } from '@prisma/client';
+
+interface GamesQueryFilter {
+  where?: {
+    title: {
+      contains?: string;
+    }
+  }
+  take?: number;
+  orderBy?: {
+    id: 'asc' | 'desc';
+  }
+}
 
 const router = Router();
 const prisma = new PrismaClient();
 
-router.get('/api/games', async (req, res) => {
+router.get('/api/games', async (req: Request, res: Response) => {
   try {
-    const games = await prisma.game.findMany();
+    const gamesQueryFilter: GamesQueryFilter = {};
+    const query: string = req.query.q as string ?? '';
+    const limit: number | null = req.query.limit ?
+      parseInt(req.query.limit as string) :
+      null;
+
+    if (query) {
+      gamesQueryFilter.where = {
+        title: {
+          contains: query,
+        },
+      };
+    }
+    
+    if (limit) {
+      gamesQueryFilter.take = limit;
+      gamesQueryFilter.orderBy = {
+        id: 'desc',
+      };
+    }
+
+    const games: Game[] = await prisma.game.findMany(gamesQueryFilter);
 
     return res.status(200).json({
       games,
     });
   } catch (error) {
     console.error('Error fetching users:', error);
-    res.status(500).json({
-      error: 'Internal Server Error',
+    return res.status(500).json({
+      message: `Internal Server Error: ${error}`,
     });
   }
 });
@@ -30,8 +63,6 @@ router.get('/api/games/:slug', async (req, res) => {
 
     if (game) {
       return res.status(200).json({
-        success: true,
-        message: 'Game found',
         game,
       });
     }
@@ -42,7 +73,7 @@ router.get('/api/games/:slug', async (req, res) => {
   } catch (error) {
     console.error('Error fetching game:', error);
     return res.status(500).json({
-      error: 'Internal Server Error',
+      message: `Internal Server Error: ${error}`,
     });
   }
 });
@@ -71,14 +102,12 @@ router.post('/api/games', async (req, res) => {
     }
 
     return res.status(201).json({
-      success: true,
-      message: 'Game created successfully',
       game: newGame,
     });
   } catch (error) {
     console.error('Error creating new game:', error);
     return res.status(500).json({
-      error: 'Internal Server Error',
+      message: `Internal Server Error: ${error}`,
     });
   }
 });
